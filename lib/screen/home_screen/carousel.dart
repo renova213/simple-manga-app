@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
 import 'package:manga_time/screen/detail_screen/detail_screen.dart';
 import 'package:manga_time/screen/home_screen/home_screen_view_model.dart';
@@ -31,12 +33,18 @@ class _CarouselState extends State<Carousel> {
                       Stack(children: [
                         ClipRRect(
                           child: AspectRatio(
-                            aspectRatio: 2.0,
-                            child: Image.network(
-                              banner.bannerList[i].gambar,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
+                              aspectRatio: 2.0,
+                              child: CachedNetworkImage(
+                                errorWidget: (context, url, error) {
+                                  return const Icon(Icons.error,
+                                      color: Colors.red);
+                                },
+                                placeholder: (context, url) {
+                                  return const Center(child: Loading());
+                                },
+                                imageUrl: banner.bannerList[i].gambar,
+                                fit: BoxFit.fill,
+                              )),
                         ),
                         Positioned(
                             bottom: 10,
@@ -57,7 +65,8 @@ class _CarouselState extends State<Carousel> {
                                     Navigator.of(context).push(
                                         NavigatorAnimation(
                                             child: DetailScreen(
-                                              sinopsis: banner.bannerList[i].sinopsis,
+                                                sinopsis: banner
+                                                    .bannerList[i].sinopsis,
                                                 judul:
                                                     banner.bannerList[i].judul,
                                                 gambar:

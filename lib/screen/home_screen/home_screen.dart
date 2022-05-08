@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:manga_time/components/loading.dart';
@@ -131,9 +132,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Material(
-                              child: Image.network(endpoint[index].gambar,
-                                  fit: BoxFit.fill),
-                            ),
+                                child: CachedNetworkImage(
+                              errorWidget: (context, url, error) {
+                                return const Icon(Icons.error,
+                                    color: Colors.red);
+                              },
+                              placeholder: (context, url) {
+                                return const Center(child: Loading());
+                              },
+                              imageUrl: endpoint[index].gambar,
+                              fit: BoxFit.fill,
+                            )),
                           ),
                         )),
                     const SizedBox(

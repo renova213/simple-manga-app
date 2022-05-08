@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
@@ -59,38 +60,52 @@ class _PopularScreenState extends State<PopularScreen> {
                             borderRadius: BorderRadius.circular(10),
                             child: Material(
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(NavigatorAnimation(
-                                      child: DetailScreen(
-                                          sinopsis: viewModel
-                                              .popularList[index].sinopsis,
-                                          judul: viewModel
-                                              .popularList[index].judul,
-                                          gambar: viewModel
-                                              .popularList[index].gambar,
-                                          chapters: viewModel
-                                              .popularList[index].chapters,
-                                          umurPembaca: viewModel
-                                              .popularList[index].umurPembaca,
-                                          judulIndonesia: viewModel
-                                              .popularList[index]
-                                              .judulIndonesia,
-                                          status: viewModel
-                                              .popularList[index].status,
-                                          genre: viewModel
-                                              .popularList[index].genre,
-                                          jenisKomik: viewModel
-                                              .popularList[index].jenisKomik,
-                                          caraBaca: viewModel
-                                              .popularList[index].caraBaca,
-                                          jumlahPembaca: viewModel
-                                              .popularList[index]
-                                              .jumlahPembaca)));
-                                },
-                                child: Image.network(
-                                    viewModel.popularList[index].gambar,
-                                    fit: BoxFit.fill),
-                              ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        NavigatorAnimation(
+                                            child: DetailScreen(
+                                                sinopsis: viewModel
+                                                    .popularList[index]
+                                                    .sinopsis,
+                                                judul: viewModel
+                                                    .popularList[index].judul,
+                                                gambar: viewModel
+                                                    .popularList[index].gambar,
+                                                chapters: viewModel
+                                                    .popularList[index]
+                                                    .chapters,
+                                                umurPembaca: viewModel
+                                                    .popularList[index]
+                                                    .umurPembaca,
+                                                judulIndonesia: viewModel
+                                                    .popularList[index]
+                                                    .judulIndonesia,
+                                                status: viewModel
+                                                    .popularList[index].status,
+                                                genre: viewModel
+                                                    .popularList[index].genre,
+                                                jenisKomik: viewModel
+                                                    .popularList[index]
+                                                    .jenisKomik,
+                                                caraBaca: viewModel
+                                                    .popularList[index]
+                                                    .caraBaca,
+                                                jumlahPembaca: viewModel
+                                                    .popularList[index]
+                                                    .jumlahPembaca)));
+                                  },
+                                  child: CachedNetworkImage(
+                                    errorWidget: (context, url, error) {
+                                      return const Icon(Icons.error,
+                                          color: Colors.red);
+                                    },
+                                    placeholder: (context, url) {
+                                      return const Center(child: Loading());
+                                    },
+                                    imageUrl:
+                                        viewModel.popularList[index].gambar,
+                                    fit: BoxFit.fill,
+                                  )),
                             ),
                           ),
                         ),

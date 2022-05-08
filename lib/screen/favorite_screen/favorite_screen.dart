@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
 import 'package:manga_time/screen/detail_screen/detail_screen.dart';
 import 'package:manga_time/screen/favorite_screen/favorite_view_model.dart';
@@ -13,6 +15,17 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      var homeViewModel =
+          Provider.of<FavoriteViewModel>(context, listen: false);
+
+      await homeViewModel.getFavorite();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final favorite = Provider.of<FavoriteViewModel>(context);
@@ -45,38 +58,52 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             borderRadius: BorderRadius.circular(10),
                             child: Material(
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(NavigatorAnimation(
-                                      child: DetailScreen(
-                                          sinopsis: favorite
-                                              .favoriteList[index].sinopsis,
-                                          judul: favorite
-                                              .favoriteList[index].judul,
-                                          gambar: favorite
-                                              .favoriteList[index].gambar,
-                                          chapters: favorite
-                                              .favoriteList[index].chapters,
-                                          umurPembaca: favorite
-                                              .favoriteList[index].umurPembaca,
-                                          judulIndonesia: favorite
-                                              .favoriteList[index]
-                                              .judulIndonesia,
-                                          status: favorite
-                                              .favoriteList[index].status,
-                                          genre: favorite
-                                              .favoriteList[index].genre,
-                                          jenisKomik: favorite
-                                              .favoriteList[index].jenisKomik,
-                                          caraBaca: favorite
-                                              .favoriteList[index].caraBaca,
-                                          jumlahPembaca: favorite
-                                              .favoriteList[index]
-                                              .jumlahPembaca)));
-                                },
-                                child: Image.network(
-                                    favorite.favoriteList[index].gambar!,
-                                    fit: BoxFit.fill),
-                              ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        NavigatorAnimation(
+                                            child: DetailScreen(
+                                                sinopsis: favorite
+                                                    .favoriteList[index]
+                                                    .sinopsis,
+                                                judul: favorite
+                                                    .favoriteList[index].judul,
+                                                gambar: favorite
+                                                    .favoriteList[index].gambar,
+                                                chapters: favorite
+                                                    .favoriteList[index]
+                                                    .chapters,
+                                                umurPembaca: favorite
+                                                    .favoriteList[index]
+                                                    .umurPembaca,
+                                                judulIndonesia: favorite
+                                                    .favoriteList[index]
+                                                    .judulIndonesia,
+                                                status: favorite
+                                                    .favoriteList[index].status,
+                                                genre: favorite
+                                                    .favoriteList[index].genre,
+                                                jenisKomik: favorite
+                                                    .favoriteList[index]
+                                                    .jenisKomik,
+                                                caraBaca: favorite
+                                                    .favoriteList[index]
+                                                    .caraBaca,
+                                                jumlahPembaca: favorite
+                                                    .favoriteList[index]
+                                                    .jumlahPembaca)));
+                                  },
+                                  child: CachedNetworkImage(
+                                    errorWidget: (context, url, error) {
+                                      return const Icon(Icons.error,
+                                          color: Colors.red);
+                                    },
+                                    placeholder: (context, url) {
+                                      return const Center(child: Loading());
+                                    },
+                                    imageUrl:
+                                        favorite.favoriteList[index].gambar!,
+                                    fit: BoxFit.fill,
+                                  )),
                             ),
                           ),
                         ),
@@ -127,10 +154,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                             TextButton(
                                                 onPressed: () async {
                                                   favorite.removeListFavorite(
-                                                      index,
                                                       favorite
                                                           .favoriteList[index]
-                                                          .judul!);
+                                                          .key,
+                                                      favorite
+                                                          .favoriteList[index]
+                                                          .judul!,
+                                                      index);
                                                   Fluttertoast.showToast(
                                                       msg: "Berhasil Dihapus");
                                                   Navigator.pop(context);

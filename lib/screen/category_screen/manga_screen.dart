@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
@@ -45,34 +46,44 @@ class _ManhwaScreenState extends State<MangaScreen> {
                           borderRadius: BorderRadius.circular(10),
                           child: Material(
                             child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(NavigatorAnimation(
-                                    child: DetailScreen(
-                                        sinopsis:
-                                            viewModel.mangaList[index].sinopsis,
-                                        judul: viewModel.mangaList[index].judul,
-                                        gambar:
-                                            viewModel.mangaList[index].gambar,
-                                        chapters:
-                                            viewModel.mangaList[index].chapters,
-                                        umurPembaca: viewModel
-                                            .mangaList[index].umurPembaca,
-                                        judulIndonesia: viewModel
-                                            .mangaList[index].judulIndonesia,
-                                        status:
-                                            viewModel.mangaList[index].status,
-                                        genre: viewModel.mangaList[index].genre,
-                                        jenisKomik: viewModel
-                                            .mangaList[index].jenisKomik,
-                                        caraBaca:
-                                            viewModel.mangaList[index].caraBaca,
-                                        jumlahPembaca: viewModel
-                                            .mangaList[index].jumlahPembaca)));
-                              },
-                              child: Image.network(
-                                  viewModel.mangaList[index].gambar,
-                                  fit: BoxFit.fill),
-                            ),
+                                onTap: () {
+                                  Navigator.of(context).push(NavigatorAnimation(
+                                      child: DetailScreen(
+                                          sinopsis: viewModel
+                                              .mangaList[index].sinopsis,
+                                          judul:
+                                              viewModel.mangaList[index].judul,
+                                          gambar:
+                                              viewModel.mangaList[index].gambar,
+                                          chapters: viewModel
+                                              .mangaList[index].chapters,
+                                          umurPembaca: viewModel
+                                              .mangaList[index].umurPembaca,
+                                          judulIndonesia: viewModel
+                                              .mangaList[index].judulIndonesia,
+                                          status:
+                                              viewModel.mangaList[index].status,
+                                          genre:
+                                              viewModel.mangaList[index].genre,
+                                          jenisKomik: viewModel
+                                              .mangaList[index].jenisKomik,
+                                          caraBaca: viewModel
+                                              .mangaList[index].caraBaca,
+                                          jumlahPembaca: viewModel
+                                              .mangaList[index]
+                                              .jumlahPembaca)));
+                                },
+                                child: CachedNetworkImage(
+                                  errorWidget: (context, url, error) {
+                                    return const Icon(Icons.error,
+                                        color: Colors.red);
+                                  },
+                                  placeholder: (context, url) {
+                                    return const Center(child: Loading());
+                                  },
+                                  imageUrl: viewModel.mangaList[index].gambar,
+                                  fit: BoxFit.fill,
+                                )),
                           ),
                         ),
                       ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
@@ -46,36 +47,44 @@ class _ManhwaScreenState extends State<ManhwaScreen> {
                           borderRadius: BorderRadius.circular(10),
                           child: Material(
                             child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(NavigatorAnimation(
-                                    child: DetailScreen(
-                                        sinopsis: viewModel
-                                            .manhwaList[index].sinopsis,
-                                        judul:
-                                            viewModel.manhwaList[index].judul,
-                                        gambar:
-                                            viewModel.manhwaList[index].gambar,
-                                        chapters: viewModel
-                                            .manhwaList[index].chapters,
-                                        umurPembaca: viewModel
-                                            .manhwaList[index].umurPembaca,
-                                        judulIndonesia: viewModel
-                                            .manhwaList[index].judulIndonesia,
-                                        status:
-                                            viewModel.manhwaList[index].status,
-                                        genre:
-                                            viewModel.manhwaList[index].genre,
-                                        jenisKomik: viewModel
-                                            .manhwaList[index].jenisKomik,
-                                        caraBaca: viewModel
-                                            .manhwaList[index].caraBaca,
-                                        jumlahPembaca: viewModel
-                                            .manhwaList[index].jumlahPembaca)));
-                              },
-                              child: Image.network(
-                                  viewModel.manhwaList[index].gambar,
-                                  fit: BoxFit.fill),
-                            ),
+                                onTap: () {
+                                  Navigator.of(context).push(NavigatorAnimation(
+                                      child: DetailScreen(
+                                          sinopsis: viewModel
+                                              .manhwaList[index].sinopsis,
+                                          judul:
+                                              viewModel.manhwaList[index].judul,
+                                          gambar: viewModel
+                                              .manhwaList[index].gambar,
+                                          chapters: viewModel
+                                              .manhwaList[index].chapters,
+                                          umurPembaca: viewModel
+                                              .manhwaList[index].umurPembaca,
+                                          judulIndonesia: viewModel
+                                              .manhwaList[index].judulIndonesia,
+                                          status: viewModel
+                                              .manhwaList[index].status,
+                                          genre:
+                                              viewModel.manhwaList[index].genre,
+                                          jenisKomik: viewModel
+                                              .manhwaList[index].jenisKomik,
+                                          caraBaca: viewModel
+                                              .manhwaList[index].caraBaca,
+                                          jumlahPembaca: viewModel
+                                              .manhwaList[index]
+                                              .jumlahPembaca)));
+                                },
+                                child: CachedNetworkImage(
+                                  errorWidget: (context, url, error) {
+                                    return const Icon(Icons.error,
+                                        color: Colors.red);
+                                  },
+                                  placeholder: (context, url) {
+                                    return const Center(child: Loading());
+                                  },
+                                  imageUrl: viewModel.manhwaList[index].gambar,
+                                  fit: BoxFit.fill,
+                                )),
                           ),
                         ),
                       ),

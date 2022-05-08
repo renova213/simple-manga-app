@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
@@ -45,36 +46,44 @@ class _ManhwaScreenState extends State<ManhuaScreen> {
                           borderRadius: BorderRadius.circular(10),
                           child: Material(
                             child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(NavigatorAnimation(
-                                    child: DetailScreen(
-                                        sinopsis: viewModel
-                                            .manhuaList[index].sinopsis,
-                                        judul:
-                                            viewModel.manhuaList[index].judul,
-                                        gambar:
-                                            viewModel.manhuaList[index].gambar,
-                                        chapters: viewModel
-                                            .manhuaList[index].chapters,
-                                        umurPembaca: viewModel
-                                            .manhuaList[index].umurPembaca,
-                                        judulIndonesia: viewModel
-                                            .manhuaList[index].judulIndonesia,
-                                        status:
-                                            viewModel.manhuaList[index].status,
-                                        genre:
-                                            viewModel.manhuaList[index].genre,
-                                        jenisKomik: viewModel
-                                            .manhuaList[index].jenisKomik,
-                                        caraBaca: viewModel
-                                            .manhuaList[index].caraBaca,
-                                        jumlahPembaca: viewModel
-                                            .manhuaList[index].jumlahPembaca)));
-                              },
-                              child: Image.network(
-                                  viewModel.manhuaList[index].gambar,
-                                  fit: BoxFit.fill),
-                            ),
+                                onTap: () {
+                                  Navigator.of(context).push(NavigatorAnimation(
+                                      child: DetailScreen(
+                                          sinopsis: viewModel
+                                              .manhuaList[index].sinopsis,
+                                          judul:
+                                              viewModel.manhuaList[index].judul,
+                                          gambar: viewModel
+                                              .manhuaList[index].gambar,
+                                          chapters: viewModel
+                                              .manhuaList[index].chapters,
+                                          umurPembaca: viewModel
+                                              .manhuaList[index].umurPembaca,
+                                          judulIndonesia: viewModel
+                                              .manhuaList[index].judulIndonesia,
+                                          status: viewModel
+                                              .manhuaList[index].status,
+                                          genre:
+                                              viewModel.manhuaList[index].genre,
+                                          jenisKomik: viewModel
+                                              .manhuaList[index].jenisKomik,
+                                          caraBaca: viewModel
+                                              .manhuaList[index].caraBaca,
+                                          jumlahPembaca: viewModel
+                                              .manhuaList[index]
+                                              .jumlahPembaca)));
+                                },
+                                child: CachedNetworkImage(
+                                  errorWidget: (context, url, error) {
+                                    return const Icon(Icons.error,
+                                        color: Colors.red);
+                                  },
+                                  placeholder: (context, url) {
+                                    return const Center(child: Loading());
+                                  },
+                                  imageUrl: viewModel.manhuaList[index].gambar,
+                                  fit: BoxFit.fill,
+                                )),
                           ),
                         ),
                       ),

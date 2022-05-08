@@ -10,6 +10,7 @@ class FavoriteModel {
   String? status;
   String? umurPembaca;
   String? jumlahPembaca;
+  String? key;
 
   FavoriteModel(
       {this.chapters,
@@ -22,7 +23,8 @@ class FavoriteModel {
       this.judulIndonesia,
       this.sinopsis,
       this.status,
-      this.umurPembaca});
+      this.umurPembaca,
+      this.key});
 
   factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
       chapters: json['chapters'],

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
@@ -59,37 +60,48 @@ class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
                             borderRadius: BorderRadius.circular(10),
                             child: Material(
                               child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(NavigatorAnimation(
-                                      child: DetailScreen(
-                                          sinopsis: viewModel
-                                              .komikList[index].sinopsis,
-                                          judul:
-                                              viewModel.komikList[index].judul,
-                                          gambar:
-                                              viewModel.komikList[index].gambar,
-                                          chapters: viewModel
-                                              .komikList[index].chapters,
-                                          umurPembaca: viewModel
-                                              .komikList[index].umurPembaca,
-                                          judulIndonesia: viewModel
-                                              .komikList[index].judulIndonesia,
-                                          status:
-                                              viewModel.komikList[index].status,
-                                          genre:
-                                              viewModel.komikList[index].genre,
-                                          jenisKomik: viewModel
-                                              .komikList[index].jenisKomik,
-                                          caraBaca: viewModel
-                                              .komikList[index].caraBaca,
-                                          jumlahPembaca: viewModel
-                                              .komikList[index]
-                                              .jumlahPembaca)));
-                                },
-                                child: Image.network(
-                                    viewModel.komikList[index].gambar,
-                                    fit: BoxFit.fill),
-                              ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        NavigatorAnimation(
+                                            child: DetailScreen(
+                                                sinopsis: viewModel
+                                                    .komikList[index].sinopsis,
+                                                judul: viewModel
+                                                    .komikList[index].judul,
+                                                gambar: viewModel
+                                                    .komikList[index].gambar,
+                                                chapters: viewModel
+                                                    .komikList[index].chapters,
+                                                umurPembaca: viewModel
+                                                    .komikList[index]
+                                                    .umurPembaca,
+                                                judulIndonesia: viewModel
+                                                    .komikList[index]
+                                                    .judulIndonesia,
+                                                status: viewModel
+                                                    .komikList[index].status,
+                                                genre: viewModel
+                                                    .komikList[index].genre,
+                                                jenisKomik: viewModel
+                                                    .komikList[index]
+                                                    .jenisKomik,
+                                                caraBaca: viewModel
+                                                    .komikList[index].caraBaca,
+                                                jumlahPembaca: viewModel
+                                                    .komikList[index]
+                                                    .jumlahPembaca)));
+                                  },
+                                  child: CachedNetworkImage(
+                                    errorWidget: (context, url, error) {
+                                      return const Icon(Icons.error,
+                                          color: Colors.red);
+                                    },
+                                    placeholder: (context, url) {
+                                      return const Center(child: Loading());
+                                    },
+                                    imageUrl: viewModel.komikList[index].gambar,
+                                    fit: BoxFit.fill,
+                                  )),
                             ),
                           ),
                         ),

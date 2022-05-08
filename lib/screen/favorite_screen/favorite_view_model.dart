@@ -1,27 +1,55 @@
 import 'package:flutter/cupertino.dart';
-import 'package:manga_time/models/favorite_model/favorite_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:manga_time/models/favorite_model/favorite_api/favorite_api.dart';
 
 class FavoriteViewModel extends ChangeNotifier {
-  late SharedPreferences _prefs;
-  SharedPreferences get prefs => _prefs;
-
-  final List<FavoriteModel> _favoriteList = [];
-  List<FavoriteModel> get favoriteList => _favoriteList;
+  List _favoriteList = [];
+  List get favoriteList => _favoriteList;
   List judulKomik = [];
 
-  addListFavorite(FavoriteModel list, String nama) async {
-    _prefs = await SharedPreferences.getInstance();
-    _favoriteList.add(list);
-    _favoriteList.sort(
-        ((a, b) => a.judul!.toLowerCase().compareTo(b.judul!.toLowerCase())));
-    judulKomik.add(nama);
+  postFavorite(
+      caraBaca,
+      gambar,
+      genre,
+      jenisKomik,
+      judul,
+      judulIndonesia,
+      jumlahPembaca,
+      sinopsis,
+      status,
+      umurPembaca,
+      chapters,
+      judulIndex) async {
+    await FavoriteApi.postFavoriteKomik(
+        caraBaca: caraBaca,
+        gambar: gambar,
+        genre: genre,
+        jenisKomik: jenisKomik,
+        judul: judul,
+        judulIndonesia: judulIndonesia,
+        jumlahPembaca: jumlahPembaca,
+        sinopsis: sinopsis,
+        status: status,
+        umurPembaca: umurPembaca,
+        chapters: chapters);
+
+    judulKomik.add(judulIndex);
   }
 
-  removeListFavorite(int index, String judul) {
-    _favoriteList.removeAt(index);
-    judulKomik.remove(judul);
+  getFavorite() async {
+    final getFavorite = await FavoriteApi.getFavorite();
+    _favoriteList = getFavorite;
+    _favoriteList.sort(
+        ((a, b) => a.judul!.toLowerCase().compareTo(b.judul!.toLowerCase())));
+    notifyListeners();
+  }
 
+  removeListFavorite(key, judulIndex, index) async {
+    await FavoriteApi.deleteFavorite(
+      key: key,
+    );
+    _favoriteList.removeAt(index);
+
+    judulKomik.remove(judulIndex);
     notifyListeners();
   }
 }

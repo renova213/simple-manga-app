@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/models/radio_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,7 +75,16 @@ class _ChapterScreenState extends State<ChapterScreen>
               minScale: 1.0,
               maxScale: 100.0,
               transformationController: controllerT,
-              child: Image.network(widget.imagesChapter[index]),
+              child: CachedNetworkImage(
+                errorWidget: (context, url, error) {
+                  return const Icon(Icons.error, color: Colors.red);
+                },
+                placeholder: (context, url) {
+                  return Center(child: Image.asset("assets/chibi.gif"));
+                },
+                imageUrl: widget.imagesChapter[index],
+                fit: BoxFit.fill,
+              ),
               onInteractionStart: (details) {
                 initialControllerValue = controllerT.value;
               },
