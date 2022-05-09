@@ -17,7 +17,6 @@ class DetailScreen extends StatefulWidget {
   final String? sinopsis;
   final String? status;
   final String? umurPembaca;
-  final bool? isFavorite;
   const DetailScreen(
       {Key? key,
       this.chapters,
@@ -30,8 +29,7 @@ class DetailScreen extends StatefulWidget {
       this.judulIndonesia,
       this.sinopsis,
       this.status,
-      this.umurPembaca,
-      this.isFavorite})
+      this.umurPembaca})
       : super(key: key);
 
   @override
@@ -93,8 +91,10 @@ class _DetailScreenState extends State<DetailScreen> {
                             size: 30,
                           ),
                           onPressed: () {
-                            if (favorite.judulKomik
-                                .contains(widget.judul.toString())) {
+                            var contains = favorite.favoriteList.where(
+                                (element) =>
+                                    element.judul!.contains(widget.judul));
+                            if (contains.isNotEmpty) {
                               Fluttertoast.showToast(
                                   msg:
                                       "Komik Ini Sudah Ada Di Daftar Favorite");

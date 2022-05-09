@@ -34,7 +34,7 @@ class FavoriteApi {
   }
 
   static getFavorite() async {
-    List favoriteList = [];
+    List<FavoriteModel> favoriteList = [];
     final response = await Dio().get(
         "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json");
 

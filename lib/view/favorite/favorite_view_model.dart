@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:manga_time/models/favorite_model/favorite_api/favorite_api.dart';
+import 'package:manga_time/models/favorite_model/favorite_model.dart';
 
 class FavoriteViewModel extends ChangeNotifier {
-  List _favoriteList = [];
+  List<FavoriteModel> _favoriteList = [];
   List get favoriteList => _favoriteList;
   List judulKomik = [];
 
@@ -37,7 +38,7 @@ class FavoriteViewModel extends ChangeNotifier {
 
   getFavorite() async {
     final getFavorite = await FavoriteApi.getFavorite();
-    _favoriteList = getFavorite;
+    _favoriteList = getFavorite as List<FavoriteModel>;
     _favoriteList.sort(
         ((a, b) => a.judul!.toLowerCase().compareTo(b.judul!.toLowerCase())));
     notifyListeners();

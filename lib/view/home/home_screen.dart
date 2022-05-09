@@ -121,8 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             gambar: endpoint[index].gambar,
                             sinopsis: endpoint[index].sinopsis,
                             judulIndonesia: endpoint[index].judulIndonesia,
-                            jumlahPembaca: endpoint[index].jumlahPembaca,
-                            isFavorite: endpoint[index].isFavorite)));
+                            jumlahPembaca: endpoint[index].jumlahPembaca)));
                   },
                   child: Column(children: [
                     Expanded(
