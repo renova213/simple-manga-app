@@ -57,19 +57,7 @@ class FavoriteApi {
     return favoriteList;
   }
 
-  static deleteFavorite(
-      {caraBaca,
-      gambar,
-      genre,
-      jenisKomik,
-      judul,
-      judulIndonesia,
-      jumlahPembaca,
-      sinopsis,
-      status,
-      umurPembaca,
-      chapters,
-      key}) async {
+  static deleteFavorite({key}) async {
     await Dio().delete(
         "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite/$key.json");
   }

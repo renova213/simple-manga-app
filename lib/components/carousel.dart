@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/screen/detail_screen/detail_screen.dart';
-import 'package:manga_time/screen/home_screen/home_screen_view_model.dart';
+import 'package:manga_time/view/detail/detail_screen.dart';
+import 'package:manga_time/view/home/home_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
 class Carousel extends StatefulWidget {

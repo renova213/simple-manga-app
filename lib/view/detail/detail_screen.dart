@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/screen/detail_screen/chapter_screen.dart';
-import 'package:manga_time/screen/favorite_screen/favorite_view_model.dart';
+import 'package:manga_time/view/detail/chapter_screen.dart';
+import 'package:manga_time/view/favorite/favorite_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -17,6 +17,7 @@ class DetailScreen extends StatefulWidget {
   final String? sinopsis;
   final String? status;
   final String? umurPembaca;
+  final bool? isFavorite;
   const DetailScreen(
       {Key? key,
       this.chapters,
@@ -29,7 +30,8 @@ class DetailScreen extends StatefulWidget {
       this.judulIndonesia,
       this.sinopsis,
       this.status,
-      this.umurPembaca})
+      this.umurPembaca,
+      this.isFavorite})
       : super(key: key);
 
   @override

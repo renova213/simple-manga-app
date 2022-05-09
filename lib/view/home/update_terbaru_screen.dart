@@ -2,28 +2,28 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/screen/detail_screen/detail_screen.dart';
-import 'package:manga_time/screen/home_screen/home_screen_view_model.dart';
+import 'package:manga_time/view/detail/detail_screen.dart';
+import 'package:manga_time/view/home/home_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
-class PopularScreen extends StatefulWidget {
+class UpdateTerbaruScreen extends StatefulWidget {
   final String? title;
-  const PopularScreen({
+  const UpdateTerbaruScreen({
     Key? key,
     this.title,
   }) : super(key: key);
 
   @override
-  State<PopularScreen> createState() => _PopularScreenState();
+  State<UpdateTerbaruScreen> createState() => _UpdateTerbaruScreenState();
 }
 
-class _PopularScreenState extends State<PopularScreen> {
+class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var homeViewModel =
           Provider.of<HomeScreenViewModel>(context, listen: false);
-      await homeViewModel.getPopularList();
+      await homeViewModel.getKomikList();
     });
     super.initState();
   }
@@ -31,7 +31,7 @@ class _PopularScreenState extends State<PopularScreen> {
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<HomeScreenViewModel>(context);
-    if (viewModel.popularList.isEmpty) {
+    if (viewModel.komikList.isEmpty) {
       return const Center(child: Loading());
     }
     return Scaffold(
@@ -46,7 +46,7 @@ class _PopularScreenState extends State<PopularScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
-            itemCount: viewModel.popularList.length,
+            itemCount: viewModel.komikList.length,
             itemBuilder: (context, index) {
               return SizedBox(
                   height: 150,
@@ -65,33 +65,30 @@ class _PopularScreenState extends State<PopularScreen> {
                                         NavigatorAnimation(
                                             child: DetailScreen(
                                                 sinopsis: viewModel
-                                                    .popularList[index]
-                                                    .sinopsis,
+                                                    .komikList[index].sinopsis,
                                                 judul: viewModel
-                                                    .popularList[index].judul,
+                                                    .komikList[index].judul,
                                                 gambar: viewModel
-                                                    .popularList[index].gambar,
+                                                    .komikList[index].gambar,
                                                 chapters: viewModel
-                                                    .popularList[index]
-                                                    .chapters,
+                                                    .komikList[index].chapters,
                                                 umurPembaca: viewModel
-                                                    .popularList[index]
+                                                    .komikList[index]
                                                     .umurPembaca,
                                                 judulIndonesia: viewModel
-                                                    .popularList[index]
+                                                    .komikList[index]
                                                     .judulIndonesia,
                                                 status: viewModel
-                                                    .popularList[index].status,
+                                                    .komikList[index].status,
                                                 genre: viewModel
-                                                    .popularList[index].genre,
+                                                    .komikList[index].genre,
                                                 jenisKomik: viewModel
-                                                    .popularList[index]
+                                                    .komikList[index]
                                                     .jenisKomik,
                                                 caraBaca: viewModel
-                                                    .popularList[index]
-                                                    .caraBaca,
+                                                    .komikList[index].caraBaca,
                                                 jumlahPembaca: viewModel
-                                                    .popularList[index]
+                                                    .komikList[index]
                                                     .jumlahPembaca)));
                                   },
                                   child: CachedNetworkImage(
@@ -102,8 +99,7 @@ class _PopularScreenState extends State<PopularScreen> {
                                     placeholder: (context, url) {
                                       return const Center(child: Loading());
                                     },
-                                    imageUrl:
-                                        viewModel.popularList[index].gambar,
+                                    imageUrl: viewModel.komikList[index].gambar,
                                     fit: BoxFit.fill,
                                   )),
                             ),
@@ -119,14 +115,14 @@ class _PopularScreenState extends State<PopularScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                viewModel.popularList[index].judul,
+                                viewModel.komikList[index].judul,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text(viewModel.popularList[index].genre),
+                              Text(viewModel.komikList[index].genre),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -134,7 +130,7 @@ class _PopularScreenState extends State<PopularScreen> {
                                   child: SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
                                 child: Text(
-                                  viewModel.popularList[index].sinopsis,
+                                  viewModel.komikList[index].sinopsis,
                                 ),
                               ))
                             ],

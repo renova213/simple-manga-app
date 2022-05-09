@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:manga_time/screen/report_screen/report_view_model.dart';
+import 'package:manga_time/view/report/report_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ReportScreen extends StatefulWidget {

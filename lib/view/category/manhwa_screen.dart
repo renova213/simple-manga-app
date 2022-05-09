@@ -2,23 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/screen/category_screen/category_view_model.dart';
-import 'package:manga_time/screen/detail_screen/detail_screen.dart';
+import 'package:manga_time/view/category/category_view_model.dart';
+import 'package:manga_time/view/detail/detail_screen.dart';
 import 'package:provider/provider.dart';
 
-class MangaScreen extends StatefulWidget {
-  const MangaScreen({Key? key}) : super(key: key);
+class ManhwaScreen extends StatefulWidget {
+  const ManhwaScreen({Key? key}) : super(key: key);
 
   @override
-  State<MangaScreen> createState() => _ManhwaScreenState();
+  State<ManhwaScreen> createState() => _ManhwaScreenState();
 }
 
-class _ManhwaScreenState extends State<MangaScreen> {
+class _ManhwaScreenState extends State<ManhwaScreen> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      var viewModel = Provider.of<CategoryViewModel>(context, listen: false);
-      await viewModel.getMangaList();
+      var homeViewModel =
+          Provider.of<CategoryViewModel>(context, listen: false);
+      await homeViewModel.getManhwaList();
     });
     super.initState();
   }
@@ -26,13 +27,13 @@ class _ManhwaScreenState extends State<MangaScreen> {
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<CategoryViewModel>(context);
-    if (viewModel.mangaList.isEmpty) {
+    if (viewModel.manhwaList.isEmpty) {
       return const Center(child: Loading());
     }
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.builder(
-          itemCount: viewModel.mangaList.length,
+          itemCount: viewModel.manhwaList.length,
           itemBuilder: (context, index) {
             return SizedBox(
                 height: 150,
@@ -50,27 +51,27 @@ class _ManhwaScreenState extends State<MangaScreen> {
                                   Navigator.of(context).push(NavigatorAnimation(
                                       child: DetailScreen(
                                           sinopsis: viewModel
-                                              .mangaList[index].sinopsis,
+                                              .manhwaList[index].sinopsis,
                                           judul:
-                                              viewModel.mangaList[index].judul,
-                                          gambar:
-                                              viewModel.mangaList[index].gambar,
+                                              viewModel.manhwaList[index].judul,
+                                          gambar: viewModel
+                                              .manhwaList[index].gambar,
                                           chapters: viewModel
-                                              .mangaList[index].chapters,
+                                              .manhwaList[index].chapters,
                                           umurPembaca: viewModel
-                                              .mangaList[index].umurPembaca,
+                                              .manhwaList[index].umurPembaca,
                                           judulIndonesia: viewModel
-                                              .mangaList[index].judulIndonesia,
-                                          status:
-                                              viewModel.mangaList[index].status,
+                                              .manhwaList[index].judulIndonesia,
+                                          status: viewModel
+                                              .manhwaList[index].status,
                                           genre:
-                                              viewModel.mangaList[index].genre,
+                                              viewModel.manhwaList[index].genre,
                                           jenisKomik: viewModel
-                                              .mangaList[index].jenisKomik,
+                                              .manhwaList[index].jenisKomik,
                                           caraBaca: viewModel
-                                              .mangaList[index].caraBaca,
+                                              .manhwaList[index].caraBaca,
                                           jumlahPembaca: viewModel
-                                              .mangaList[index]
+                                              .manhwaList[index]
                                               .jumlahPembaca)));
                                 },
                                 child: CachedNetworkImage(
@@ -81,7 +82,7 @@ class _ManhwaScreenState extends State<MangaScreen> {
                                   placeholder: (context, url) {
                                     return const Center(child: Loading());
                                   },
-                                  imageUrl: viewModel.mangaList[index].gambar,
+                                  imageUrl: viewModel.manhwaList[index].gambar,
                                   fit: BoxFit.fill,
                                 )),
                           ),
@@ -97,14 +98,14 @@ class _ManhwaScreenState extends State<MangaScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              viewModel.mangaList[index].judul,
+                              viewModel.manhwaList[index].judul,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(viewModel.mangaList[index].genre),
+                            Text(viewModel.manhwaList[index].genre),
                             const SizedBox(
                               height: 10,
                             ),
@@ -112,7 +113,7 @@ class _ManhwaScreenState extends State<MangaScreen> {
                                 child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Text(
-                                viewModel.mangaList[index].sinopsis,
+                                viewModel.manhwaList[index].sinopsis,
                               ),
                             ))
                           ],

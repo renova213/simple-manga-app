@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:manga_time/screen/category_screen/category_view_model.dart';
-import 'package:manga_time/screen/favorite_screen/favorite_view_model.dart';
-import 'package:manga_time/screen/home_screen/home_screen_view_model.dart';
-import 'package:manga_time/screen/report_screen/report_view_model.dart';
+import 'package:manga_time/view/category/category_view_model.dart';
+import 'package:manga_time/view/favorite/favorite_view_model.dart';
+import 'package:manga_time/view/home/home_screen_view_model.dart';
+import 'package:manga_time/view/report/report_view_model.dart';
 import 'package:provider/provider.dart';
-import 'screen/splash_screen/splash_screen.dart';
+import 'components/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());

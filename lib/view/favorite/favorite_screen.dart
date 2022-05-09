@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/screen/detail_screen/detail_screen.dart';
-import 'package:manga_time/screen/favorite_screen/favorite_view_model.dart';
+import 'package:manga_time/view/detail/detail_screen.dart';
+import 'package:manga_time/view/favorite/favorite_view_model.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatefulWidget {

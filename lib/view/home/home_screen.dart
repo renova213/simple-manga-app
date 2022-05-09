@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:manga_time/components/carousel.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/screen/detail_screen/detail_screen.dart';
-import 'package:manga_time/screen/home_screen/carousel.dart';
-import 'package:manga_time/screen/home_screen/home_screen_view_model.dart';
-import 'package:manga_time/screen/home_screen/popular_screen.dart';
-import 'package:manga_time/screen/home_screen/update_terbaru_screen.dart';
-import 'package:manga_time/screen/search_screen/search_screen.dart';
+import 'package:manga_time/view/detail/detail_screen.dart';
+import 'package:manga_time/view/home/home_screen_view_model.dart';
+import 'package:manga_time/view/home/popular_screen.dart';
+import 'package:manga_time/view/home/update_terbaru_screen.dart';
+import 'package:manga_time/view/search/search_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -111,18 +111,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     Navigator.of(context).push(NavigatorAnimation(
                         child: DetailScreen(
-                      chapters: endpoint[index].chapters,
-                      umurPembaca: endpoint[index].umurPembaca,
-                      status: endpoint[index].status,
-                      jenisKomik: endpoint[index].jenisKomik,
-                      genre: endpoint[index].genre,
-                      caraBaca: endpoint[index].caraBaca,
-                      judul: endpoint[index].judul,
-                      gambar: endpoint[index].gambar,
-                      sinopsis: endpoint[index].sinopsis,
-                      judulIndonesia: endpoint[index].judulIndonesia,
-                      jumlahPembaca: endpoint[index].jumlahPembaca,
-                    )));
+                            chapters: endpoint[index].chapters,
+                            umurPembaca: endpoint[index].umurPembaca,
+                            status: endpoint[index].status,
+                            jenisKomik: endpoint[index].jenisKomik,
+                            genre: endpoint[index].genre,
+                            caraBaca: endpoint[index].caraBaca,
+                            judul: endpoint[index].judul,
+                            gambar: endpoint[index].gambar,
+                            sinopsis: endpoint[index].sinopsis,
+                            judulIndonesia: endpoint[index].judulIndonesia,
+                            jumlahPembaca: endpoint[index].jumlahPembaca,
+                            isFavorite: endpoint[index].isFavorite)));
                   },
                   child: Column(children: [
                     Expanded(

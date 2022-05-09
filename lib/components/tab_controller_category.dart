@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:manga_time/screen/category_screen/manga_screen.dart';
-import 'package:manga_time/screen/category_screen/manhua_screen.dart';
-import 'package:manga_time/screen/category_screen/manhwa_screen.dart';
+import 'package:manga_time/view/category/manga_screen.dart';
+import 'package:manga_time/view/category/manhua_screen.dart';
+import 'package:manga_time/view/category/manhwa_screen.dart';
 
 class TabContollerCategory extends StatefulWidget {
   const TabContollerCategory({Key? key}) : super(key: key);

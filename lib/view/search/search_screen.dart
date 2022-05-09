@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:manga_time/components/navigator_animation.dart';
 import 'package:manga_time/models/search_model/search_api/search_api.dart';
 import 'package:manga_time/models/search_model/search_model.dart';
-import 'package:manga_time/screen/detail_screen/detail_screen.dart';
+import 'package:manga_time/view/detail/detail_screen.dart';
 
 class SearchManga extends SearchDelegate {
   final SearchApi _mangaList = SearchApi();
