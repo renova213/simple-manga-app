@@ -3,6 +3,7 @@ import 'package:manga_time/view/category/category_view_model.dart';
 import 'package:manga_time/view/favorite/favorite_view_model.dart';
 import 'package:manga_time/view/home/home_screen_view_model.dart';
 import 'package:manga_time/view/report/report_view_model.dart';
+import 'package:manga_time/view/search/search_view_model.dart';
 import 'package:provider/provider.dart';
 import 'components/splash_screen.dart';
 
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<ReportViewModel>(
           create: (_) => ReportViewModel(),
+        ),
+        ChangeNotifierProvider<SearchViewModel>(
+          create: (_) => SearchViewModel(),
         ),
       ],
       child: const MaterialApp(

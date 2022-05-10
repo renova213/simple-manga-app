@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:manga_time/models/report_model/report_model.dart';
 import 'package:manga_time/view/report/report_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -103,11 +104,11 @@ class _ReportScreenState extends State<ReportScreen> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         await report
-                            .postReport(
-                                widget.judul.toString(),
-                                _messageEditingController.text,
-                                _emailEditingController.text,
-                                _nameEditingController.text)
+                            .postReport(ReportModel(
+                                judulKomik: widget.judul.toString(),
+                                message: _messageEditingController.text,
+                                email: _emailEditingController.text,
+                                name: _nameEditingController.text))
                             .then((value) => Fluttertoast.showToast(
                                 msg: 'berhasil terkirim'))
                             .then((value) => _messageEditingController.clear())

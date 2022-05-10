@@ -21,6 +21,7 @@ class HomeScreenViewModel extends ChangeNotifier {
   getBannerList() async {
     final getBannerList = await KomikApi.getKomikList(endpoint: "banners");
     _bannerList = getBannerList;
+    notifyListeners();
   }
 
   getPopularList() async {

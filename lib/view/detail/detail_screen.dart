@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manga_time/components/navigator_animation.dart';
+import 'package:manga_time/models/favorite_model/favorite_model.dart';
 import 'package:manga_time/view/detail/chapter_screen.dart';
 import 'package:manga_time/view/favorite/favorite_view_model.dart';
 import 'package:manga_time/view/report/report_screen.dart';
@@ -111,19 +112,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                   msg:
                                       "Komik Ini Sudah Ada Di Daftar Favorite");
                             } else {
-                              favorite.postFavorite(
-                                  widget.caraBaca,
-                                  widget.gambar,
-                                  widget.genre,
-                                  widget.jenisKomik,
-                                  widget.judul,
-                                  widget.judulIndonesia,
-                                  widget.jumlahPembaca,
-                                  widget.sinopsis,
-                                  widget.status,
-                                  widget.umurPembaca,
-                                  widget.chapters,
-                                  widget.judul.toString());
+                              favorite.postFavorite(FavoriteModel(
+                                  caraBaca: widget.caraBaca,
+                                  gambar: widget.gambar,
+                                  genre: widget.genre,
+                                  jenisKomik: widget.jenisKomik,
+                                  judul: widget.judul,
+                                  judulIndonesia: widget.judulIndonesia,
+                                  jumlahPembaca: widget.jumlahPembaca,
+                                  sinopsis: widget.sinopsis,
+                                  status: widget.status,
+                                  umurPembaca: widget.umurPembaca,
+                                  chapters: widget.chapters));
                               Fluttertoast.showToast(
                                   msg:
                                       "Komik Berhasil Ditambahkan Ke Favorite");

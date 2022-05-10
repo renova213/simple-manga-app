@@ -16,14 +16,14 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
-  void initState() {
+  void didChangeDependencies() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
       var homeViewModel =
           Provider.of<FavoriteViewModel>(context, listen: false);
 
       await homeViewModel.getFavorite();
     });
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -157,9 +157,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                       favorite
                                                           .favoriteList[index]
                                                           .key,
-                                                      favorite
-                                                          .favoriteList[index]
-                                                          .judul!,
                                                       index);
                                                   Fluttertoast.showToast(
                                                       msg: "Berhasil Dihapus");

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/models/search_model/search_api/search_api.dart';
-import 'package:manga_time/models/search_model/search_model.dart';
 import 'package:manga_time/view/detail/detail_screen.dart';
+import 'package:manga_time/view/search/search_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SearchManga extends SearchDelegate {
-  final SearchApi _mangaList = SearchApi();
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -28,33 +27,43 @@ class SearchManga extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder<List<SearchModel>>(
-        future: _mangaList.getSearchList(query: query),
+    final viewModel = Provider.of<SearchViewModel>(context);
+    return FutureBuilder(
+        future: viewModel.getKomikList(query),
         builder: (context, snapshot) {
-          var data = snapshot.data;
-          if (!snapshot.hasData) {
-            return (const Center(
-              child: CircularProgressIndicator(),
+          if (viewModel.resultList.isEmpty) {
+            return (Center(
+              child: Text(
+                "Komik Yang Dicari Tidak Ada",
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey.shade700,
+                    fontWeight: FontWeight.bold),
+              ),
             ));
           }
           return ListView.builder(
-            itemCount: data!.length,
+            itemCount: viewModel.resultList.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(NavigatorAnimation(
                         child: DetailScreen(
-                            sinopsis: data[index].sinopsis,
-                            judul: data[index].judul,
-                            gambar: data[index].gambar,
-                            chapters: data[index].chapters,
-                            umurPembaca: data[index].umurPembaca,
-                            judulIndonesia: data[index].judulIndonesia,
-                            status: data[index].status,
-                            genre: data[index].genre,
-                            jenisKomik: data[index].jenisKomik,
-                            caraBaca: data[index].caraBaca,
-                            jumlahPembaca: data[index].jumlahPembaca)));
+                            sinopsis: viewModel.resultList[index].sinopsis,
+                            judul: viewModel.resultList[index].judul,
+                            gambar: viewModel.resultList[index].gambar,
+                            chapters: viewModel.resultList[index].chapters,
+                            umurPembaca:
+                                viewModel.resultList[index].umurPembaca,
+                            judulIndonesia:
+                                viewModel.resultList[index].judulIndonesia,
+                            status: viewModel.resultList[index].status,
+                            genre: viewModel.resultList[index].genre,
+                            jenisKomik: viewModel.resultList[index].jenisKomik,
+                            caraBaca: viewModel.resultList[index].caraBaca,
+                            jumlahPembaca:
+                                viewModel.resultList[index].jumlahPembaca)));
                   },
                   child: SizedBox(
                       height: 150,
@@ -68,7 +77,8 @@ class SearchManga extends SearchDelegate {
                                 borderRadius: BorderRadius.circular(10),
                                 child: Material(
                                   child: Image.network(
-                                      data[index].gambar.toString(),
+                                      viewModel.resultList[index].gambar
+                                          .toString(),
                                       fit: BoxFit.fill),
                                 ),
                               ),
@@ -83,14 +93,16 @@ class SearchManga extends SearchDelegate {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data[index].judul.toString(),
+                                    viewModel.resultList[index].judul
+                                        .toString(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Text(data[index].genre.toString()),
+                                  Text(viewModel.resultList[index].genre
+                                      .toString()),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -98,7 +110,8 @@ class SearchManga extends SearchDelegate {
                                       child: SingleChildScrollView(
                                     scrollDirection: Axis.vertical,
                                     child: Text(
-                                      data[index].sinopsis.toString(),
+                                      viewModel.resultList[index].sinopsis
+                                          .toString(),
                                     ),
                                   ))
                                 ],

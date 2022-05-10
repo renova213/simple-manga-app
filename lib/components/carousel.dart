@@ -19,100 +19,93 @@ class _CarouselState extends State<Carousel> {
   CarouselController carouselController = CarouselController();
 
   @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      var homeViewModel =
+          Provider.of<HomeScreenViewModel>(context, listen: false);
+
+      await homeViewModel.getBannerList();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var banner = Provider.of<HomeScreenViewModel>(context);
     return Column(
       children: [
         Expanded(
-          child: FutureBuilder(
-              future: banner.getBannerList(),
-              builder: (context, snapshot) {
-                return CarouselSlider(
-                  items: [
-                    for (var i = 0; i < banner.bannerList.length; i++)
-                      Stack(children: [
-                        ClipRRect(
-                          child: AspectRatio(
-                              aspectRatio: 2.0,
-                              child: CachedNetworkImage(
-                                errorWidget: (context, url, error) {
-                                  return const Icon(Icons.error,
-                                      color: Colors.red);
-                                },
-                                placeholder: (context, url) {
-                                  return const Center(child: Loading());
-                                },
-                                imageUrl: banner.bannerList[i].gambar,
-                                fit: BoxFit.fill,
-                              )),
-                        ),
-                        Positioned(
-                            bottom: 10,
-                            left: 250,
-                            child: SizedBox(
-                              height: 25,
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Colors.white),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ))),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                        NavigatorAnimation(
-                                            child: DetailScreen(
-                                                sinopsis: banner
-                                                    .bannerList[i].sinopsis,
-                                                judul:
-                                                    banner.bannerList[i].judul,
-                                                gambar:
-                                                    banner.bannerList[i].gambar,
-                                                chapters: banner
-                                                    .bannerList[i].chapters,
-                                                umurPembaca: banner
-                                                    .bannerList[i].umurPembaca,
-                                                judulIndonesia: banner
-                                                    .bannerList[i]
-                                                    .judulIndonesia,
-                                                status:
-                                                    banner.bannerList[i].status,
-                                                genre:
-                                                    banner.bannerList[i].genre,
-                                                jenisKomik: banner
-                                                    .bannerList[i].jenisKomik,
-                                                caraBaca: banner
-                                                    .bannerList[i].caraBaca,
-                                                jumlahPembaca: banner
-                                                    .bannerList[i]
-                                                    .jumlahPembaca)));
-                                  },
-                                  child: const Text(
-                                    "Read Now",
-                                    style: TextStyle(color: Colors.black),
-                                  )),
-                            ))
-                      ])
-                  ],
-                  carouselController: carouselController,
-                  options: CarouselOptions(
-                      autoPlayAnimationDuration: const Duration(seconds: 2),
-                      enableInfiniteScroll: false,
-                      enlargeCenterPage: true,
-                      autoPlay: true,
+            child: CarouselSlider(
+          items: [
+            for (var i = 0; i < banner.bannerList.length; i++)
+              Stack(children: [
+                ClipRRect(
+                  child: AspectRatio(
                       aspectRatio: 2.0,
-                      viewportFraction: 1,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          _current = index;
-                        });
-                      }),
-                );
+                      child: CachedNetworkImage(
+                        errorWidget: (context, url, error) {
+                          return const Icon(Icons.error, color: Colors.red);
+                        },
+                        placeholder: (context, url) {
+                          return const Center(child: Loading());
+                        },
+                        imageUrl: banner.bannerList[i].gambar,
+                        fit: BoxFit.fill,
+                      )),
+                ),
+                Positioned(
+                    bottom: 10,
+                    left: 250,
+                    child: SizedBox(
+                      height: 25,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ))),
+                          onPressed: () {
+                            Navigator.of(context).push(NavigatorAnimation(
+                                child: DetailScreen(
+                                    sinopsis: banner.bannerList[i].sinopsis,
+                                    judul: banner.bannerList[i].judul,
+                                    gambar: banner.bannerList[i].gambar,
+                                    chapters: banner.bannerList[i].chapters,
+                                    umurPembaca:
+                                        banner.bannerList[i].umurPembaca,
+                                    judulIndonesia:
+                                        banner.bannerList[i].judulIndonesia,
+                                    status: banner.bannerList[i].status,
+                                    genre: banner.bannerList[i].genre,
+                                    jenisKomik: banner.bannerList[i].jenisKomik,
+                                    caraBaca: banner.bannerList[i].caraBaca,
+                                    jumlahPembaca:
+                                        banner.bannerList[i].jumlahPembaca)));
+                          },
+                          child: const Text(
+                            "Read Now",
+                            style: TextStyle(color: Colors.black),
+                          )),
+                    ))
+              ])
+          ],
+          carouselController: carouselController,
+          options: CarouselOptions(
+              autoPlayAnimationDuration: const Duration(seconds: 2),
+              enableInfiniteScroll: false,
+              enlargeCenterPage: true,
+              autoPlay: true,
+              aspectRatio: 2.0,
+              viewportFraction: 1,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  _current = index;
+                });
               }),
-        ),
+        )),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: banner.bannerList.asMap().entries.map((entry) {

@@ -4,33 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:manga_time/models/favorite_model/favorite_model.dart';
 
 class FavoriteApi {
-  static postFavoriteKomik(
-      {caraBaca,
-      gambar,
-      genre,
-      jenisKomik,
-      judul,
-      judulIndonesia,
-      jumlahPembaca,
-      sinopsis,
-      status,
-      umurPembaca,
-      chapters}) async {
+  static postFavoriteKomik({FavoriteModel? postfavorite}) async {
     await Dio().post(
         "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json",
-        data: jsonEncode({
-          'caraBaca': caraBaca.toString(),
-          'gambar': gambar.toString(),
-          'genre': genre.toString(),
-          'jenisKomik': jenisKomik.toString(),
-          'judul': judul.toString(),
-          'judulIndonesia': judulIndonesia.toString(),
-          'jumlahPembaca': jumlahPembaca.toString(),
-          'sinopsis': sinopsis.toString(),
-          'status': status.toString(),
-          'umurPembaca': umurPembaca.toString(),
-          'chapters': chapters
-        }));
+        data: jsonEncode(postfavorite));
   }
 
   static getFavorite() async {
