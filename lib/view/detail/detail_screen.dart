@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manga_time/components/navigator_animation.dart';
 import 'package:manga_time/view/detail/chapter_screen.dart';
 import 'package:manga_time/view/favorite/favorite_view_model.dart';
+import 'package:manga_time/view/report/report_screen.dart';
 import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -85,8 +86,19 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                       const Spacer(),
                       IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(NavigatorAnimation(
+                                child: ReportScreen(
+                                    judul: widget.judul.toString())));
+                          },
                           icon: const Icon(
-                            Icons.bookmark_add,
+                            Icons.report,
+                            color: Colors.white,
+                            size: 30,
+                          )),
+                      IconButton(
+                          icon: const Icon(
+                            Icons.favorite,
                             color: Colors.white,
                             size: 30,
                           ),

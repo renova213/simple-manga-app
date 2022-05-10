@@ -100,7 +100,7 @@ class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
                                       return const Center(child: Loading());
                                     },
                                     imageUrl: viewModel.komikList[index].gambar,
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
                                   )),
                             ),
                           ),

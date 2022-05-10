@@ -104,7 +104,7 @@ class _PopularScreenState extends State<PopularScreen> {
                                     },
                                     imageUrl:
                                         viewModel.popularList[index].gambar,
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
                                   )),
                             ),
                           ),

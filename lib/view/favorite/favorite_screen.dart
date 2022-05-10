@@ -102,7 +102,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     },
                                     imageUrl:
                                         favorite.favoriteList[index].gambar!,
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
                                   )),
                             ),
                           ),

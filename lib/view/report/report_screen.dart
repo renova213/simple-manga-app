@@ -4,17 +4,17 @@ import 'package:manga_time/view/report/report_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ReportScreen extends StatefulWidget {
-  const ReportScreen({Key? key}) : super(key: key);
+  final String judul;
+  const ReportScreen({Key? key, required this.judul}) : super(key: key);
 
   @override
   State<ReportScreen> createState() => _ReportScreenState();
 }
 
 class _ReportScreenState extends State<ReportScreen> {
-  final _namaKomikEditingController = TextEditingController();
   final _messageEditingController = TextEditingController();
-  String? _namaKomik;
-  String? _message;
+  final _emailEditingController = TextEditingController();
+  final _nameEditingController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   @override
@@ -34,63 +34,57 @@ class _ReportScreenState extends State<ReportScreen> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Text("Isi Nama Komik :",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  const SizedBox(
-                    height: 5,
+                Center(
+                  child: Text(
+                    widget.judul.toString(),
+                    style: const TextStyle(
+                        fontSize: 20,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.bold),
                   ),
-                  TextFormField(
-                      controller: _namaKomikEditingController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                      ),
-                      onChanged: (value) {
-                        _namaKomik = value;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          Fluttertoast.showToast(
-                              msg: "Nama Komik Tidak Boleh Kosong",
-                              textColor: Colors.white,
-                              backgroundColor: Colors.red);
-                        }
-                        return null;
-                      }),
-                ]),
+                ),
                 const SizedBox(height: 15),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Text("Isi Permasalahan :",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  TextFormField(
-                      maxLines: 6,
-                      maxLength: 100,
-                      controller: _messageEditingController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                      ),
-                      onChanged: (value) {
-                        _message = value;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          Fluttertoast.showToast(
-                              msg: "form pesan tidak boleh kosong",
-                              textColor: Colors.white,
-                              backgroundColor: Colors.red);
-                        }
-                        return null;
-                      }),
-                ]),
-                const SizedBox(height: 10),
+                const Text("Isi Nama Kamu :",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(
+                  height: 5,
+                ),
+                textFormField(
+                    "Nama Tidak Boleh Kosong", _nameEditingController),
+                const SizedBox(height: 15),
+                const Text("Isi Email :",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(
+                  height: 5,
+                ),
+                textFormField(
+                    "Email Tidak Boleh Kosong", _emailEditingController),
+                const SizedBox(height: 15),
+                const Text("Isi Permasalahan :",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(
+                  height: 5,
+                ),
+                TextFormField(
+                    maxLines: 6,
+                    maxLength: 100,
+                    controller: _messageEditingController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        Fluttertoast.showToast(
+                            msg: "form pesan tidak boleh kosong",
+                            textColor: Colors.white,
+                            backgroundColor: Colors.red);
+                      }
+                      return null;
+                    }),
+                const SizedBox(height: 15),
                 SizedBox(
                   width: 300,
                   child: ElevatedButton(
@@ -110,13 +104,15 @@ class _ReportScreenState extends State<ReportScreen> {
                         _formKey.currentState!.save();
                         await report
                             .postReport(
-                                'komik yang bermasalah $_namaKomik, $_message')
-                            .then((value) =>
-                                Fluttertoast.showToast(msg: 'berhasil terkirim')
-                                    .then((value) =>
-                                        _namaKomikEditingController.clear())
-                                    .then((value) =>
-                                        _messageEditingController.clear()));
+                                widget.judul.toString(),
+                                _messageEditingController.text,
+                                _emailEditingController.text,
+                                _nameEditingController.text)
+                            .then((value) => Fluttertoast.showToast(
+                                msg: 'berhasil terkirim'))
+                            .then((value) => _messageEditingController.clear())
+                            .then((value) => _emailEditingController.clear())
+                            .then((value) => _nameEditingController.clear());
                       }
                     },
                   ),
@@ -125,5 +121,22 @@ class _ReportScreenState extends State<ReportScreen> {
             ),
           )),
     );
+  }
+
+  Widget textFormField(msgValidator, controller) {
+    return TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            Fluttertoast.showToast(
+                msg: msgValidator,
+                textColor: Colors.white,
+                backgroundColor: Colors.red);
+          }
+          return null;
+        });
   }
 }

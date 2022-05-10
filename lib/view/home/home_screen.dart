@@ -130,8 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           aspectRatio: 3.5 / 4,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Material(
-                                child: CachedNetworkImage(
+                            child: CachedNetworkImage(
                               errorWidget: (context, url, error) {
                                 return const Icon(Icons.error,
                                     color: Colors.red);
@@ -140,8 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return const Center(child: Loading());
                               },
                               imageUrl: endpoint[index].gambar,
-                              fit: BoxFit.fill,
-                            )),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         )),
                     const SizedBox(

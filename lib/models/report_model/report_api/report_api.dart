@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class ReportApi {
-  static Future sendReport({message}) async {
+  static Future sendReport({judulKomik, message, email, name}) async {
     await Dio().post("https://api.emailjs.com/api/v1.0/email/send",
         options: Options(headers: {
           'origin': 'http://localhost',
@@ -13,7 +13,12 @@ class ReportApi {
           'service_id': 'service_6lw1pun',
           'template_id': 'template_vs58srs',
           'user_id': 'X7q8O0RPBcKptSUNi',
-          'template_params': {'message': message}
+          'template_params': {
+            'judulKomik': judulKomik,
+            'message': message,
+            'email': email,
+            'name': name
+          }
         }));
   }
 }

@@ -82,7 +82,7 @@ class _ManhwaScreenState extends State<MangaScreen> {
                                     return const Center(child: Loading());
                                   },
                                   imageUrl: viewModel.mangaList[index].gambar,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 )),
                           ),
                         ),
