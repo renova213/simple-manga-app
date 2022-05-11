@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:manga_time/models/komik_model/komik_list_model.dart';
 
 class KomikApi {
-  static getKomikList({String? endpoint}) async {
+  getKomikList({String? endpoint}) async {
     final response = await Dio().get(
         "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/$endpoint.json");
 

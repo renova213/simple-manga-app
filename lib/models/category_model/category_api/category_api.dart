@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:manga_time/models/category_model/category_model.dart';
 
 class CategoryApi {
-  static getCategoryList({String? endpoint}) async {
+  getCategoryList({String? endpoint}) async {
     final response = await Dio().get(
         "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/$endpoint.json");
     var mangaList = (response.data as List)

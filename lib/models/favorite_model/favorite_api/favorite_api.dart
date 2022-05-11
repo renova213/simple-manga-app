@@ -4,13 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:manga_time/models/favorite_model/favorite_model.dart';
 
 class FavoriteApi {
-  static postFavoriteKomik({FavoriteModel? postfavorite}) async {
-    await Dio().post(
+  postFavoriteKomik({FavoriteModel? postfavorite}) async {
+    final response = await Dio().post(
         "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json",
         data: jsonEncode(postfavorite));
+    return response;
   }
 
-  static getFavorite() async {
+  getFavorite() async {
     List<FavoriteModel> favoriteList = [];
     final response = await Dio().get(
         "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json");
@@ -34,7 +35,7 @@ class FavoriteApi {
     return favoriteList;
   }
 
-  static deleteFavorite({key}) async {
+  deleteFavorite({key}) async {
     await Dio().delete(
         "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite/$key.json");
   }

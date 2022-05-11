@@ -4,6 +4,7 @@ import 'package:manga_time/models/search_model/search_api/search_api.dart';
 import 'package:manga_time/models/search_model/search_model.dart';
 
 class SearchViewModel extends ChangeNotifier {
+  final searchApi = SearchApi();
   List<SearchModel> _komikList = [];
   List<SearchModel> get komikList => _komikList;
 
@@ -11,7 +12,7 @@ class SearchViewModel extends ChangeNotifier {
   List<SearchModel> get resultList => _resultList;
 
   getKomikList(query) async {
-    final getKomikList = await SearchApi.getKomikList();
+    final getKomikList = await searchApi.getKomikList();
     _komikList = getKomikList;
 
     if (query == "") {
