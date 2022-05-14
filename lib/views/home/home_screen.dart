@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:manga_time/components/carousel.dart';
+import 'package:manga_time/views/home/carousel.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/view/detail/detail_screen.dart';
-import 'package:manga_time/view/home/home_screen_view_model.dart';
-import 'package:manga_time/view/home/popular_screen.dart';
-import 'package:manga_time/view/home/update_terbaru_screen.dart';
-import 'package:manga_time/view/search/search.dart';
+import 'package:manga_time/views/detail/detail_screen.dart';
+import 'package:manga_time/views/home/home_screen_view_model.dart';
+import 'package:manga_time/views/home/popular_screen.dart';
+import 'package:manga_time/views/home/update_terbaru_screen.dart';
+import 'package:manga_time/views/search/search.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,16 +19,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      var homeViewModel =
-          Provider.of<HomeScreenViewModel>(context, listen: false);
+  bool isInit = true;
 
-      await homeViewModel.getKomikList();
-      await homeViewModel.getPopularList();
-    });
-    super.initState();
+  @override
+  void didChangeDependencies() {
+    if (isInit == true) {
+      Provider.of<HomeScreenViewModel>(context, listen: false).getKomikList();
+      Provider.of<HomeScreenViewModel>(context, listen: false).getPopularList();
+      isInit = false;
+    }
+    super.didChangeDependencies();
   }
 
   @override

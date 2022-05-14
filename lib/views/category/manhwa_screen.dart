@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/view/category/category_view_model.dart';
-import 'package:manga_time/view/detail/detail_screen.dart';
+import 'package:manga_time/views/category/category_view_model.dart';
+import 'package:manga_time/views/detail/detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class ManhwaScreen extends StatefulWidget {
@@ -14,14 +14,15 @@ class ManhwaScreen extends StatefulWidget {
 }
 
 class _ManhwaScreenState extends State<ManhwaScreen> {
+  bool isInit = true;
+
   @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      var homeViewModel =
-          Provider.of<CategoryViewModel>(context, listen: false);
-      await homeViewModel.getManhwaList();
-    });
-    super.initState();
+  void didChangeDependencies() {
+    if (isInit == true) {
+      Provider.of<CategoryViewModel>(context, listen: false).getManhwaList();
+      isInit = false;
+    }
+    super.didChangeDependencies();
   }
 
   @override

@@ -2,36 +2,37 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/view/detail/detail_screen.dart';
-import 'package:manga_time/view/home/home_screen_view_model.dart';
+import 'package:manga_time/views/detail/detail_screen.dart';
+import 'package:manga_time/views/home/home_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
-class UpdateTerbaruScreen extends StatefulWidget {
+class PopularScreen extends StatefulWidget {
   final String? title;
-  const UpdateTerbaruScreen({
+  const PopularScreen({
     Key? key,
     this.title,
   }) : super(key: key);
 
   @override
-  State<UpdateTerbaruScreen> createState() => _UpdateTerbaruScreenState();
+  State<PopularScreen> createState() => _PopularScreenState();
 }
 
-class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
+class _PopularScreenState extends State<PopularScreen> {
+  bool isInit = true;
+
   @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      var homeViewModel =
-          Provider.of<HomeScreenViewModel>(context, listen: false);
-      await homeViewModel.getKomikList();
-    });
-    super.initState();
+  void didChangeDependencies() {
+    if (isInit == true) {
+      Provider.of<HomeScreenViewModel>(context, listen: false).getPopularList();
+      isInit = false;
+    }
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     var viewModel = Provider.of<HomeScreenViewModel>(context);
-    if (viewModel.komikList.isEmpty) {
+    if (viewModel.popularList.isEmpty) {
       return const Center(child: Loading());
     }
     return Scaffold(
@@ -46,7 +47,7 @@ class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
-            itemCount: viewModel.komikList.length,
+            itemCount: viewModel.popularList.length,
             itemBuilder: (context, index) {
               return SizedBox(
                   height: 150,
@@ -65,30 +66,33 @@ class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
                                         NavigatorAnimation(
                                             child: DetailScreen(
                                                 sinopsis: viewModel
-                                                    .komikList[index].sinopsis,
+                                                    .popularList[index]
+                                                    .sinopsis,
                                                 judul: viewModel
-                                                    .komikList[index].judul,
+                                                    .popularList[index].judul,
                                                 gambar: viewModel
-                                                    .komikList[index].gambar,
+                                                    .popularList[index].gambar,
                                                 chapters: viewModel
-                                                    .komikList[index].chapters,
+                                                    .popularList[index]
+                                                    .chapters,
                                                 umurPembaca: viewModel
-                                                    .komikList[index]
+                                                    .popularList[index]
                                                     .umurPembaca,
                                                 judulIndonesia: viewModel
-                                                    .komikList[index]
+                                                    .popularList[index]
                                                     .judulIndonesia,
                                                 status: viewModel
-                                                    .komikList[index].status,
+                                                    .popularList[index].status,
                                                 genre: viewModel
-                                                    .komikList[index].genre,
+                                                    .popularList[index].genre,
                                                 jenisKomik: viewModel
-                                                    .komikList[index]
+                                                    .popularList[index]
                                                     .jenisKomik,
                                                 caraBaca: viewModel
-                                                    .komikList[index].caraBaca,
+                                                    .popularList[index]
+                                                    .caraBaca,
                                                 jumlahPembaca: viewModel
-                                                    .komikList[index]
+                                                    .popularList[index]
                                                     .jumlahPembaca)));
                                   },
                                   child: CachedNetworkImage(
@@ -99,7 +103,8 @@ class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
                                     placeholder: (context, url) {
                                       return const Center(child: Loading());
                                     },
-                                    imageUrl: viewModel.komikList[index].gambar,
+                                    imageUrl:
+                                        viewModel.popularList[index].gambar,
                                     fit: BoxFit.cover,
                                   )),
                             ),
@@ -115,14 +120,14 @@ class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                viewModel.komikList[index].judul,
+                                viewModel.popularList[index].judul,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text(viewModel.komikList[index].genre),
+                              Text(viewModel.popularList[index].genre),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -130,7 +135,7 @@ class _UpdateTerbaruScreenState extends State<UpdateTerbaruScreen> {
                                   child: SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
                                 child: Text(
-                                  viewModel.komikList[index].sinopsis,
+                                  viewModel.popularList[index].sinopsis,
                                 ),
                               ))
                             ],

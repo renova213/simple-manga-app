@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/view/detail/detail_screen.dart';
-import 'package:manga_time/view/favorite/favorite_view_model.dart';
+import 'package:manga_time/views/detail/detail_screen.dart';
+import 'package:manga_time/views/favorite/favorite_view_model.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -15,23 +15,20 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  bool isInit = true;
+
   @override
   void didChangeDependencies() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      var homeViewModel =
-          Provider.of<FavoriteViewModel>(context, listen: false);
-
-      await homeViewModel.getFavorite();
-    });
+    if (isInit == true) {
+      Provider.of<FavoriteViewModel>(context, listen: false).getFavorite();
+      isInit = false;
+    }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     final favorite = Provider.of<FavoriteViewModel>(context);
-    if (favorite.favoriteList.isEmpty) {
-      return const Center(child: Text("Empty"));
-    }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -159,6 +156,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                           .key,
                                                       index);
                                                   Fluttertoast.showToast(
+                                                      toastLength:
+                                                          Toast.LENGTH_SHORT,
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                      textColor: Colors.white,
                                                       msg: "Berhasil Dihapus");
                                                   Navigator.pop(context);
                                                 },

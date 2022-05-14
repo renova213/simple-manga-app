@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/models/radio_model.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChapterScreen extends StatefulWidget {
@@ -14,8 +16,7 @@ class ChapterScreen extends StatefulWidget {
   State<ChapterScreen> createState() => _ChapterScreenState();
 }
 
-class _ChapterScreenState extends State<ChapterScreen>
-    with TickerProviderStateMixin {
+class _ChapterScreenState extends State<ChapterScreen> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   int _group = 1;
   bool _isHorizontal = false;
@@ -64,34 +65,23 @@ class _ChapterScreenState extends State<ChapterScreen>
             ],
           ),
         ],
-        body: ListView.builder(
+        body: PhotoViewGallery.builder(
           scrollDirection: _isHorizontal ? Axis.horizontal : Axis.vertical,
           itemCount: widget.imagesChapter.length,
-          itemBuilder: (context, index) {
-            TransformationController controllerT = TransformationController();
-            // ignore: prefer_typing_uninitialized_variables
-            var initialControllerValue;
-            return InteractiveViewer(
-              minScale: 1.0,
-              maxScale: 100.0,
-              transformationController: controllerT,
-              child: CachedNetworkImage(
-                errorWidget: (context, url, error) {
-                  return const Icon(Icons.error, color: Colors.red);
-                },
-                placeholder: (context, url) {
-                  return Center(child: Image.asset("assets/chibi.gif"));
-                },
-                imageUrl: widget.imagesChapter[index],
-                fit: BoxFit.fill,
-              ),
-              onInteractionStart: (details) {
-                initialControllerValue = controllerT.value;
-              },
-              onInteractionEnd: (details) {
-                controllerT.value = initialControllerValue;
-              },
+          builder: (context, index) {
+            return PhotoViewGalleryPageOptions(
+              imageProvider:
+                  CachedNetworkImageProvider(widget.imagesChapter[index]),
+              minScale: PhotoViewComputedScale.contained * 1,
+              maxScale: PhotoViewComputedScale.covered * 2.0,
+              initialScale: PhotoViewComputedScale.contained * 1.0,
             );
+          },
+          loadingBuilder: (context, event) {
+            return SizedBox(
+                width: 80,
+                height: 80,
+                child: Center(child: Image.asset("assets/chibi.gif")));
           },
         ),
       ),

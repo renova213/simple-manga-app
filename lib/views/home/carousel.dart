@@ -3,8 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/view/detail/detail_screen.dart';
-import 'package:manga_time/view/home/home_screen_view_model.dart';
+import 'package:manga_time/views/detail/detail_screen.dart';
+import 'package:manga_time/views/home/home_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
 class Carousel extends StatefulWidget {
@@ -18,15 +18,15 @@ class _CarouselState extends State<Carousel> {
   int _current = 0;
   CarouselController carouselController = CarouselController();
 
-  @override
-  void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
-      var homeViewModel =
-          Provider.of<HomeScreenViewModel>(context, listen: false);
+  bool isInit = true;
 
-      await homeViewModel.getBannerList();
-    });
-    super.initState();
+  @override
+  void didChangeDependencies() {
+    if (isInit == true) {
+      Provider.of<HomeScreenViewModel>(context, listen: false).getBannerList();
+      isInit = false;
+    }
+    super.didChangeDependencies();
   }
 
   @override

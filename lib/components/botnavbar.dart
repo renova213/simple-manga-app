@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/tab_controller_category.dart';
-import 'package:manga_time/view/favorite/favorite_screen.dart';
-import 'package:manga_time/view/home/home_screen.dart';
+import 'package:manga_time/views/favorite/favorite_screen.dart';
+import 'package:manga_time/views/home/home_screen.dart';
 
 class BotNavBar extends StatefulWidget {
   const BotNavBar({Key? key}) : super(key: key);

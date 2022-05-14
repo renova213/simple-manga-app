@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/view/detail/detail_screen.dart';
-import 'package:manga_time/view/search/search_view_model.dart';
+import 'package:manga_time/views/detail/detail_screen.dart';
+import 'package:manga_time/views/search/search_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SearchManga extends SearchDelegate {
@@ -76,10 +78,18 @@ class SearchManga extends SearchDelegate {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Material(
-                                  child: Image.network(
-                                      viewModel.resultList[index].gambar
-                                          .toString(),
-                                      fit: BoxFit.fill),
+                                  child: CachedNetworkImage(
+                                    errorWidget: (context, url, error) {
+                                      return const Icon(Icons.error,
+                                          color: Colors.red);
+                                    },
+                                    placeholder: (context, url) {
+                                      return const Center(child: Loading());
+                                    },
+                                    imageUrl: viewModel.resultList[index].gambar
+                                        .toString(),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

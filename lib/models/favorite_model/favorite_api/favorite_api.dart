@@ -4,39 +4,51 @@ import 'package:dio/dio.dart';
 import 'package:manga_time/models/favorite_model/favorite_model.dart';
 
 class FavoriteApi {
-  postFavoriteKomik({FavoriteModel? postfavorite}) async {
-    final response = await Dio().post(
-        "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json",
-        data: jsonEncode(postfavorite));
-    return response;
+  Future postFavoriteKomik({FavoriteModel? postfavorite}) async {
+    try {
+      final response = await Dio().post(
+          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json",
+          data: jsonEncode(postfavorite));
+      return response;
+    } on Exception catch (_) {
+      throw Exception("Post Failed");
+    }
   }
 
-  getFavorite() async {
+  Future<List<FavoriteModel>> getFavorite() async {
     List<FavoriteModel> favoriteList = [];
-    final response = await Dio().get(
-        "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json");
+    try {
+      final response = await Dio().get(
+          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json");
 
-    (response.data as Map<String, dynamic>).forEach((key, value) {
-      favoriteList.add(FavoriteModel(
-          chapters: value['chapters'],
-          caraBaca: value['caraBaca'],
-          gambar: value['gambar'],
-          genre: value['genre'],
-          jenisKomik: value['jenisKomik'],
-          judul: value['judul'],
-          judulIndonesia: value['judulIndonesia'],
-          sinopsis: value['sinopsis'],
-          status: value['status'],
-          umurPembaca: value['umurPembaca'],
-          jumlahPembaca: value['jumlahPembaca'],
-          key: key));
-    });
+      (response.data as Map<String, dynamic>).forEach((key, value) {
+        favoriteList.add(FavoriteModel(
+            chapters: value['chapters'],
+            caraBaca: value['caraBaca'],
+            gambar: value['gambar'],
+            genre: value['genre'],
+            jenisKomik: value['jenisKomik'],
+            judul: value['judul'],
+            judulIndonesia: value['judulIndonesia'],
+            sinopsis: value['sinopsis'],
+            status: value['status'],
+            umurPembaca: value['umurPembaca'],
+            jumlahPembaca: value['jumlahPembaca'],
+            key: key));
+      });
+    } on Exception catch (_) {
+      throw Exception("Failed Fetch");
+    }
 
     return favoriteList;
   }
 
-  deleteFavorite({key}) async {
-    await Dio().delete(
-        "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite/$key.json");
+  Future deleteFavorite({key}) async {
+    try {
+      await Dio().delete(
+          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite/$key.json");
+    } catch (_) {
+      throw Exception("Delete Failed");
+    }
   }
 }

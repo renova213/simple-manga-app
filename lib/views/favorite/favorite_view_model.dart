@@ -7,13 +7,17 @@ class FavoriteViewModel extends ChangeNotifier {
   List<FavoriteModel> _favoriteList = [];
   List get favoriteList => _favoriteList;
 
-  postFavorite(favorite) async {
+  List tempValidatorFavorite = [];
+
+  postFavorite(favorite, judulKomik) async {
     await favoriteApi.postFavoriteKomik(postfavorite: favorite);
+    tempValidatorFavorite.add(judulKomik);
+    notifyListeners();
   }
 
   getFavorite() async {
     final getFavorite = await favoriteApi.getFavorite();
-    _favoriteList = getFavorite as List<FavoriteModel>;
+    _favoriteList = getFavorite;
     _favoriteList.sort(
         ((a, b) => a.judul!.toLowerCase().compareTo(b.judul!.toLowerCase())));
     notifyListeners();

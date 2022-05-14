@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:manga_time/view/category/category_view_model.dart';
-import 'package:manga_time/view/favorite/favorite_view_model.dart';
-import 'package:manga_time/view/home/home_screen_view_model.dart';
-import 'package:manga_time/view/report/report_view_model.dart';
-import 'package:manga_time/view/search/search_view_model.dart';
+import 'package:manga_time/views/category/category_view_model.dart';
+import 'package:manga_time/views/favorite/favorite_view_model.dart';
+import 'package:manga_time/views/home/home_screen_view_model.dart';
+import 'package:manga_time/views/report/report_view_model.dart';
+import 'package:manga_time/views/search/search_view_model.dart';
 import 'package:provider/provider.dart';
 import 'components/splash_screen.dart';
 
