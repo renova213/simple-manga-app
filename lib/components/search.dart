@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
 import 'package:manga_time/views/detail/detail_screen.dart';
-import 'package:manga_time/views/search/search_view_model.dart';
+import 'package:manga_time/views/home/home_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SearchManga extends SearchDelegate {
@@ -29,11 +29,11 @@ class SearchManga extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final viewModel = Provider.of<SearchViewModel>(context);
+    final viewModel = Provider.of<HomeScreenViewModel>(context);
     return FutureBuilder(
-        future: viewModel.getKomikList(query),
+        future: viewModel.searchComic(query: query),
         builder: (context, snapshot) {
-          if (viewModel.resultList.isEmpty) {
+          if (viewModel.result.isEmpty) {
             return (Center(
               child: Text(
                 "Komik Yang Dicari Tidak Ada",
@@ -46,26 +46,25 @@ class SearchManga extends SearchDelegate {
             ));
           }
           return ListView.builder(
-            itemCount: viewModel.resultList.length,
+            itemCount: viewModel.result.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(NavigatorAnimation(
                         child: DetailScreen(
-                            sinopsis: viewModel.resultList[index].sinopsis,
-                            judul: viewModel.resultList[index].judul,
-                            gambar: viewModel.resultList[index].gambar,
-                            chapters: viewModel.resultList[index].chapters,
-                            umurPembaca:
-                                viewModel.resultList[index].umurPembaca,
+                            sinopsis: viewModel.result[index].sinopsis,
+                            judul: viewModel.result[index].judul,
+                            gambar: viewModel.result[index].gambar,
+                            chapters: viewModel.result[index].chapters,
+                            umurPembaca: viewModel.result[index].umurPembaca,
                             judulIndonesia:
-                                viewModel.resultList[index].judulIndonesia,
-                            status: viewModel.resultList[index].status,
-                            genre: viewModel.resultList[index].genre,
-                            jenisKomik: viewModel.resultList[index].jenisKomik,
-                            caraBaca: viewModel.resultList[index].caraBaca,
+                                viewModel.result[index].judulIndonesia,
+                            status: viewModel.result[index].status,
+                            genre: viewModel.result[index].genre,
+                            jenisKomik: viewModel.result[index].jenisKomik,
+                            caraBaca: viewModel.result[index].caraBaca,
                             jumlahPembaca:
-                                viewModel.resultList[index].jumlahPembaca)));
+                                viewModel.result[index].jumlahPembaca)));
                   },
                   child: SizedBox(
                       height: 150,
@@ -86,7 +85,7 @@ class SearchManga extends SearchDelegate {
                                     placeholder: (context, url) {
                                       return const Center(child: Loading());
                                     },
-                                    imageUrl: viewModel.resultList[index].gambar
+                                    imageUrl: viewModel.result[index].gambar
                                         .toString(),
                                     fit: BoxFit.cover,
                                   ),
@@ -103,16 +102,15 @@ class SearchManga extends SearchDelegate {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    viewModel.resultList[index].judul
-                                        .toString(),
+                                    viewModel.result[index].judul.toString(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Text(viewModel.resultList[index].genre
-                                      .toString()),
+                                  Text(
+                                      viewModel.result[index].genre.toString()),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -120,7 +118,7 @@ class SearchManga extends SearchDelegate {
                                       child: SingleChildScrollView(
                                     scrollDirection: Axis.vertical,
                                     child: Text(
-                                      viewModel.resultList[index].sinopsis
+                                      viewModel.result[index].sinopsis
                                           .toString(),
                                     ),
                                   ))

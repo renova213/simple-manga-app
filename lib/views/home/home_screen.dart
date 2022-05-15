@@ -8,7 +8,7 @@ import 'package:manga_time/views/detail/detail_screen.dart';
 import 'package:manga_time/views/home/home_screen_view_model.dart';
 import 'package:manga_time/views/home/popular_screen.dart';
 import 'package:manga_time/views/home/update_terbaru_screen.dart';
-import 'package:manga_time/views/search/search.dart';
+import 'package:manga_time/components/search.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {

@@ -13,7 +13,10 @@ class HomeScreenViewModel extends ChangeNotifier {
   List<KomikListModel> _popularList = [];
   List get popularList => _popularList;
 
-  getKomikList({String? query}) async {
+  List<KomikListModel> _result = [];
+  List get result => _result;
+
+  getKomikList() async {
     final getKomikList = await komikApi.getKomikList(endpoint: "komik");
     _komikList = getKomikList;
     notifyListeners();
@@ -28,6 +31,19 @@ class HomeScreenViewModel extends ChangeNotifier {
   getPopularList() async {
     final getPopularList = await komikApi.getKomikList(endpoint: "popular");
     _popularList = getPopularList;
+    notifyListeners();
+  }
+
+  searchComic({String? query}) async {
+    if (query == "") {
+      return _result.clear();
+    } else if (query != null) {
+      return _result = _komikList
+          .where((element) =>
+              element.judul!.toLowerCase().contains(query.toLowerCase()) ||
+              element.genre!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
     notifyListeners();
   }
 }
