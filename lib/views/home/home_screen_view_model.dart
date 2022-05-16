@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:manga_time/models/komik_model/komik_api/komik_api.dart';
 import 'package:manga_time/models/komik_model/komik_list_model.dart';
 
@@ -16,9 +16,16 @@ class HomeScreenViewModel extends ChangeNotifier {
   List<KomikListModel> _result = [];
   List get result => _result;
 
+  List<KomikListModel> _aksi = [];
+  List get aksi => _aksi;
+
+  List<KomikListModel> _isekai = [];
+  List get isekai => _isekai;
+
   getKomikList() async {
     final getKomikList = await komikApi.getKomikList(endpoint: "komik");
     _komikList = getKomikList;
+    _komikList.sort((b, a) => a.date!.compareTo(b.date!));
     notifyListeners();
   }
 
@@ -29,8 +36,25 @@ class HomeScreenViewModel extends ChangeNotifier {
   }
 
   getPopularList() async {
-    final getPopularList = await komikApi.getKomikList(endpoint: "popular");
+    final getPopularList = await komikApi.getKomikList(endpoint: "komik");
     _popularList = getPopularList;
+    _popularList.sort((b, a) => a.jumlahPembaca!.compareTo(b.jumlahPembaca!));
+    notifyListeners();
+  }
+
+  getAksiList() async {
+    final getAksiList = await komikApi.getKomikList(endpoint: "komik");
+    _aksi = getAksiList
+        .where((element) => element.genre!.toLowerCase().contains("aksi"))
+        .toList();
+    notifyListeners();
+  }
+
+  getIsekaiList() async {
+    final getIsekaiList = await komikApi.getKomikList(endpoint: "komik");
+    _isekai = getIsekaiList
+        .where((element) => element.genre!.toLowerCase().contains("isekai"))
+        .toList();
     notifyListeners();
   }
 

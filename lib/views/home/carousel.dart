@@ -82,8 +82,9 @@ class _CarouselState extends State<Carousel> {
                                     genre: banner.bannerList[i].genre,
                                     jenisKomik: banner.bannerList[i].jenisKomik,
                                     caraBaca: banner.bannerList[i].caraBaca,
-                                    jumlahPembaca:
-                                        banner.bannerList[i].jumlahPembaca)));
+                                    jumlahPembaca: banner
+                                        .bannerList[i].jumlahPembaca
+                                        .toString())));
                           },
                           child: const Text(
                             "Read Now",

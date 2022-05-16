@@ -1,33 +1,41 @@
 import 'package:flutter/cupertino.dart';
-import 'package:manga_time/models/category_model/category_api/category_api.dart';
-import 'package:manga_time/models/category_model/category_model.dart';
+import 'package:manga_time/models/komik_model/komik_api/komik_api.dart';
+import 'package:manga_time/models/komik_model/komik_list_model.dart';
 
 class CategoryViewModel extends ChangeNotifier {
-  final categoryApi = CategoryApi();
-  List<CategoryModel> _mangaList = [];
+  final categoryApi = KomikApi();
+  List<KomikListModel> _mangaList = [];
   List get mangaList => _mangaList;
 
-  List<CategoryModel> _manhwaList = [];
+  List<KomikListModel> _manhwaList = [];
   List get manhwaList => _manhwaList;
 
-  List<CategoryModel> _manhuaList = [];
+  List<KomikListModel> _manhuaList = [];
   List get manhuaList => _manhuaList;
 
   getMangaList() async {
-    var getMangaList = await categoryApi.getCategoryList(endpoint: "manga");
-    _mangaList = getMangaList;
+    final getMangaList = await categoryApi.getKomikList(endpoint: "komik");
+    _mangaList = getMangaList
+        .where((element) => element.jenisKomik!.toLowerCase().contains("manga"))
+        .toList();
     notifyListeners();
   }
 
   getManhwaList() async {
-    var getManhwaList = await categoryApi.getCategoryList(endpoint: "manhwa");
-    _manhwaList = getManhwaList;
+    final getManhwaList = await categoryApi.getKomikList(endpoint: "komik");
+    _manhwaList = getManhwaList
+        .where(
+            (element) => element.jenisKomik!.toLowerCase().contains("manhwa"))
+        .toList();
     notifyListeners();
   }
 
   getManhuaList() async {
-    var getManhuaList = await categoryApi.getCategoryList(endpoint: "manhua");
-    _manhuaList = getManhuaList;
+    final getManhuaList = await categoryApi.getKomikList(endpoint: "komik");
+    _manhuaList = getManhuaList
+        .where(
+            (element) => element.jenisKomik!.toLowerCase().contains("manhua"))
+        .toList();
     notifyListeners();
   }
 }

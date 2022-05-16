@@ -3,38 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
 import 'package:manga_time/views/detail/detail_screen.dart';
-import 'package:manga_time/views/home/home_screen_view_model.dart';
-import 'package:provider/provider.dart';
 
-class PopularScreen extends StatefulWidget {
+class MoreScreen extends StatefulWidget {
   final String? title;
-  const PopularScreen({
-    Key? key,
-    this.title,
-  }) : super(key: key);
+  final List? endpoint;
+  const MoreScreen({Key? key, this.title, this.endpoint}) : super(key: key);
 
   @override
-  State<PopularScreen> createState() => _PopularScreenState();
+  State<MoreScreen> createState() => _MoreScreenState();
 }
 
-class _PopularScreenState extends State<PopularScreen> {
-  bool isInit = true;
-
-  @override
-  void didChangeDependencies() {
-    if (isInit == true) {
-      Provider.of<HomeScreenViewModel>(context, listen: false).getPopularList();
-      isInit = false;
-    }
-    super.didChangeDependencies();
-  }
-
+class _MoreScreenState extends State<MoreScreen> {
   @override
   Widget build(BuildContext context) {
-    var viewModel = Provider.of<HomeScreenViewModel>(context);
-    if (viewModel.popularList.isEmpty) {
-      return const Center(child: Loading());
-    }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -47,7 +28,7 @@ class _PopularScreenState extends State<PopularScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
-            itemCount: viewModel.popularList.length,
+            itemCount: widget.endpoint!.length,
             itemBuilder: (context, index) {
               return SizedBox(
                   height: 150,
@@ -65,34 +46,31 @@ class _PopularScreenState extends State<PopularScreen> {
                                     Navigator.of(context).push(
                                         NavigatorAnimation(
                                             child: DetailScreen(
-                                                sinopsis: viewModel
-                                                    .popularList[index]
-                                                    .sinopsis,
-                                                judul: viewModel
-                                                    .popularList[index].judul,
-                                                gambar: viewModel
-                                                    .popularList[index].gambar,
-                                                chapters: viewModel
-                                                    .popularList[index]
-                                                    .chapters,
-                                                umurPembaca: viewModel
-                                                    .popularList[index]
+                                                sinopsis: widget
+                                                    .endpoint![index].sinopsis,
+                                                judul: widget
+                                                    .endpoint![index].judul,
+                                                gambar: widget
+                                                    .endpoint![index].gambar,
+                                                chapters: widget
+                                                    .endpoint![index].chapters,
+                                                umurPembaca: widget
+                                                    .endpoint![index]
                                                     .umurPembaca,
-                                                judulIndonesia: viewModel
-                                                    .popularList[index]
+                                                judulIndonesia: widget
+                                                    .endpoint![index]
                                                     .judulIndonesia,
-                                                status: viewModel
-                                                    .popularList[index].status,
-                                                genre: viewModel
-                                                    .popularList[index].genre,
-                                                jenisKomik: viewModel
-                                                    .popularList[index]
+                                                status: widget
+                                                    .endpoint![index].status,
+                                                genre: widget
+                                                    .endpoint![index].genre,
+                                                jenisKomik: widget
+                                                    .endpoint![index]
                                                     .jenisKomik,
-                                                caraBaca: viewModel
-                                                    .popularList[index]
-                                                    .caraBaca,
-                                                jumlahPembaca: viewModel
-                                                    .popularList[index]
+                                                caraBaca: widget
+                                                    .endpoint![index].caraBaca,
+                                                jumlahPembaca: widget
+                                                    .endpoint![index]
                                                     .jumlahPembaca)));
                                   },
                                   child: CachedNetworkImage(
@@ -103,8 +81,7 @@ class _PopularScreenState extends State<PopularScreen> {
                                     placeholder: (context, url) {
                                       return const Center(child: Loading());
                                     },
-                                    imageUrl:
-                                        viewModel.popularList[index].gambar,
+                                    imageUrl: widget.endpoint![index].gambar,
                                     fit: BoxFit.cover,
                                   )),
                             ),
@@ -120,14 +97,14 @@ class _PopularScreenState extends State<PopularScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                viewModel.popularList[index].judul,
+                                widget.endpoint![index].judul,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              Text(viewModel.popularList[index].genre),
+                              Text(widget.endpoint![index].genre),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -135,7 +112,7 @@ class _PopularScreenState extends State<PopularScreen> {
                                   child: SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
                                 child: Text(
-                                  viewModel.popularList[index].sinopsis,
+                                  widget.endpoint![index].sinopsis,
                                 ),
                               ))
                             ],

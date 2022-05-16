@@ -9,7 +9,8 @@ class KomikListModel {
   String? sinopsis;
   String? status;
   String? umurPembaca;
-  String? jumlahPembaca;
+  int? jumlahPembaca;
+  String? date;
 
   KomikListModel(
       {this.chapters,
@@ -22,7 +23,8 @@ class KomikListModel {
       this.judulIndonesia,
       this.sinopsis,
       this.status,
-      this.umurPembaca});
+      this.umurPembaca,
+      this.date});
 
   factory KomikListModel.fromJson(Map<String, dynamic> json) => KomikListModel(
       chapters: json['chapters'],
@@ -35,7 +37,8 @@ class KomikListModel {
       judulIndonesia: json['judulIndonesia'],
       sinopsis: json['sinopsis'],
       status: json['status'],
-      umurPembaca: json['umurPembaca']);
+      umurPembaca: json['umurPembaca'],
+      date: json['date']);
 
   Map<String, dynamic> toJson() => {
         "chapters": chapters,
@@ -50,5 +53,6 @@ class KomikListModel {
         "sinopsis": sinopsis,
         "status": status,
         "umurPembaca": umurPembaca,
+        "date": date
       };
 }

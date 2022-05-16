@@ -6,8 +6,7 @@ import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
 import 'package:manga_time/views/detail/detail_screen.dart';
 import 'package:manga_time/views/home/home_screen_view_model.dart';
-import 'package:manga_time/views/home/popular_screen.dart';
-import 'package:manga_time/views/home/update_terbaru_screen.dart';
+import 'package:manga_time/views/home/more_screen.dart';
 import 'package:manga_time/components/search.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isInit == true) {
       Provider.of<HomeScreenViewModel>(context, listen: false).getKomikList();
       Provider.of<HomeScreenViewModel>(context, listen: false).getPopularList();
+      Provider.of<HomeScreenViewModel>(context, listen: false).getIsekaiList();
+      Provider.of<HomeScreenViewModel>(context, listen: false).getAksiList();
       isInit = false;
     }
     super.didChangeDependencies();
@@ -34,9 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeScreenViewModel>(context);
-    if (homeViewModel.komikList.isEmpty || homeViewModel.popularList.isEmpty) {
-      return const Center(child: Loading());
-    }
     return Scaffold(
         backgroundColor: Colors.white54,
         appBar: AppBar(
@@ -62,7 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
               listCategory(
                   context,
                   "Recent Update",
-                  const UpdateTerbaruScreen(title: "Update Terbaru"),
+                  MoreScreen(
+                      title: "Update Terbaru",
+                      endpoint: homeViewModel.komikList),
                   homeViewModel.komikList),
               const SizedBox(
                 height: 10,
@@ -70,8 +70,25 @@ class _HomeScreenState extends State<HomeScreen> {
               listCategory(
                   context,
                   "Popular",
-                  const PopularScreen(title: "Popular"),
+                  MoreScreen(
+                      title: "Popular", endpoint: homeViewModel.popularList),
                   homeViewModel.popularList),
+              const SizedBox(
+                height: 10,
+              ),
+              listCategory(
+                  context,
+                  "Aksi",
+                  MoreScreen(title: "Aksi", endpoint: homeViewModel.aksi),
+                  homeViewModel.aksi),
+              const SizedBox(
+                height: 10,
+              ),
+              listCategory(
+                  context,
+                  "Isekai",
+                  MoreScreen(title: "Isekai", endpoint: homeViewModel.isekai),
+                  homeViewModel.isekai),
             ],
           ),
         ]));
@@ -105,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: 5,
+              itemCount: endpoint.length,
               itemBuilder: ((context, index) {
                 return GestureDetector(
                   onTap: () {
@@ -121,7 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             gambar: endpoint[index].gambar,
                             sinopsis: endpoint[index].sinopsis,
                             judulIndonesia: endpoint[index].judulIndonesia,
-                            jumlahPembaca: endpoint[index].jumlahPembaca)));
+                            jumlahPembaca:
+                                endpoint[index].jumlahPembaca.toString())));
                   },
                   child: Column(children: [
                     Expanded(

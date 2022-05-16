@@ -19,7 +19,8 @@ class KomikApi {
               sinopsis: e['sinopsis'],
               status: e['status'],
               umurPembaca: e['umurPembaca'],
-              jumlahPembaca: e['jumlahPembaca']))
+              jumlahPembaca: e['jumlahPembaca'],
+              date: e['date']))
           .toList();
       return mangaList;
     } on Exception catch (_) {
