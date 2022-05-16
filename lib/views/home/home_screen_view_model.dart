@@ -42,19 +42,12 @@ class HomeScreenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  getAksiList() async {
-    final getAksiList = await komikApi.getKomikList(endpoint: "komik");
-    _aksi = getAksiList
-        .where((element) => element.genre!.toLowerCase().contains("aksi"))
-        .toList();
-    notifyListeners();
-  }
-
   getIsekaiList() async {
     final getIsekaiList = await komikApi.getKomikList(endpoint: "komik");
     _isekai = getIsekaiList
         .where((element) => element.genre!.toLowerCase().contains("isekai"))
         .toList();
+    _isekai.sort((b, a) => a.date!.compareTo(b.date!));
     notifyListeners();
   }
 

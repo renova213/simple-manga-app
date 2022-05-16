@@ -26,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<HomeScreenViewModel>(context, listen: false).getKomikList();
       Provider.of<HomeScreenViewModel>(context, listen: false).getPopularList();
       Provider.of<HomeScreenViewModel>(context, listen: false).getIsekaiList();
-      Provider.of<HomeScreenViewModel>(context, listen: false).getAksiList();
       isInit = false;
     }
     super.didChangeDependencies();
@@ -78,14 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               listCategory(
                   context,
-                  "Aksi",
-                  MoreScreen(title: "Aksi", endpoint: homeViewModel.aksi),
-                  homeViewModel.aksi),
-              const SizedBox(
-                height: 10,
-              ),
-              listCategory(
-                  context,
                   "Isekai",
                   MoreScreen(title: "Isekai", endpoint: homeViewModel.isekai),
                   homeViewModel.isekai),
@@ -122,8 +113,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: endpoint.length,
+              itemCount: 5,
               itemBuilder: ((context, index) {
+                if (endpoint.isEmpty) {
+                  return const Center(child: Loading());
+                }
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(NavigatorAnimation(

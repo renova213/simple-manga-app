@@ -18,6 +18,7 @@ class CategoryViewModel extends ChangeNotifier {
     _mangaList = getMangaList
         .where((element) => element.jenisKomik!.toLowerCase().contains("manga"))
         .toList();
+    _mangaList.sort((b, a) => a.date!.compareTo(b.date!));
     notifyListeners();
   }
 
@@ -27,6 +28,7 @@ class CategoryViewModel extends ChangeNotifier {
         .where(
             (element) => element.jenisKomik!.toLowerCase().contains("manhwa"))
         .toList();
+    _manhwaList.sort((b, a) => a.date!.compareTo(b.date!));
     notifyListeners();
   }
 
@@ -36,6 +38,7 @@ class CategoryViewModel extends ChangeNotifier {
         .where(
             (element) => element.jenisKomik!.toLowerCase().contains("manhua"))
         .toList();
+    _manhuaList.sort((b, a) => a.date!.compareTo(b.date!));
     notifyListeners();
   }
 }
