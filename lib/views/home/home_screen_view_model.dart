@@ -16,9 +16,6 @@ class HomeScreenViewModel extends ChangeNotifier {
   List<KomikListModel> _result = [];
   List get result => _result;
 
-  List<KomikListModel> _aksi = [];
-  List get aksi => _aksi;
-
   List<KomikListModel> _isekai = [];
   List get isekai => _isekai;
 
