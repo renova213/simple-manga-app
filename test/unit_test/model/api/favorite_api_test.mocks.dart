@@ -2,8 +2,11 @@
 // in manga_time/test/unit_test/model/api/favorite_api_test.dart.
 // Do not manually edit this file.
 
+import 'dart:async' as _i3;
+
 import 'package:manga_time/models/favorite_model/favorite_api/favorite_api.dart'
     as _i2;
+import 'package:manga_time/models/favorite_model/favorite_model.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -23,4 +26,21 @@ class MockFavoriteApi extends _i1.Mock implements _i2.FavoriteApi {
   MockFavoriteApi() {
     _i1.throwOnMissingStub(this);
   }
+
+  @override
+  _i3.Future<dynamic> postFavoriteKomik({_i4.FavoriteModel? postfavorite}) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #postFavoriteKomik, [], {#postfavorite: postfavorite}),
+          returnValue: Future<dynamic>.value()) as _i3.Future<dynamic>);
+  @override
+  _i3.Future<List<_i4.FavoriteModel>> getFavorite() =>
+      (super.noSuchMethod(Invocation.method(#getFavorite, []),
+              returnValue:
+                  Future<List<_i4.FavoriteModel>>.value(<_i4.FavoriteModel>[]))
+          as _i3.Future<List<_i4.FavoriteModel>>);
+  @override
+  _i3.Future<dynamic> deleteFavorite({dynamic key}) =>
+      (super.noSuchMethod(Invocation.method(#deleteFavorite, [], {#key: key}),
+          returnValue: Future<dynamic>.value()) as _i3.Future<dynamic>);
 }

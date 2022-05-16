@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mac_address/mac_address.dart';
 import 'package:manga_time/components/navigator_animation.dart';
 import 'package:manga_time/models/favorite_model/favorite_model.dart';
 import 'package:manga_time/views/detail/chapter_screen.dart';
@@ -40,6 +42,27 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  String? platformVer;
+  Future<void> initPlatformState() async {
+    String platformVersion;
+    try {
+      platformVersion = await GetMac.macAddress;
+    } on PlatformException {
+      platformVersion = 'Failed to get Device MAC Address.';
+    }
+    if (!mounted) return;
+
+    setState(() {
+      platformVer = platformVersion;
+    });
+  }
+
+  @override
+  void initState() {
+    initPlatformState();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

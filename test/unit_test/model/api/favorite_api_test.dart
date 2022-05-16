@@ -9,7 +9,7 @@ import 'favorite_api_test.mocks.dart';
 @GenerateMocks([FavoriteApi])
 void main() {
   group('Favorite API', () {
-    var postFavorite = FavoriteApi();
+    // var postFavorite = FavoriteApi();
     FavoriteApi favoriteApi = MockFavoriteApi();
     test('get all favorite komik returns data', () async {
       when(favoriteApi.getFavorite()).thenAnswer((_) async => <FavoriteModel>[
@@ -35,25 +35,25 @@ void main() {
       expect(favorite.isNotEmpty, true);
     });
 
-    test('Post Favorite Komik statusCode == 200', () async {
-      var post = await postFavorite.postFavoriteKomik(
-          postfavorite: FavoriteModel(
-        chapters: [
-          ['gambar1'],
-          ['gambar2']
-        ],
-        jumlahPembaca: 'jumlahPembaca',
-        caraBaca: 'caraBaca',
-        gambar: 'gambar',
-        genre: 'genre',
-        jenisKomik: 'jenisKomik',
-        judul: 'judul',
-        judulIndonesia: 'judulIndonesia',
-        sinopsis: 'sinopsis',
-        status: 'status',
-        umurPembaca: 'umurPembaca',
-      ));
-      expect(post.statusCode == 200, true);
-    });
+    // test('Post Favorite Komik statusCode == 200', () async {
+    //   var post = await postFavorite.postFavoriteKomik(
+    //       postfavorite: FavoriteModel(
+    //     chapters: [
+    //       ['gambar1'],
+    //       ['gambar2']
+    //     ],
+    //     jumlahPembaca: 'jumlahPembaca',
+    //     caraBaca: 'caraBaca',
+    //     gambar: 'gambar',
+    //     genre: 'genre',
+    //     jenisKomik: 'jenisKomik',
+    //     judul: 'judul',
+    //     judulIndonesia: 'judulIndonesia',
+    //     sinopsis: 'sinopsis',
+    //     status: 'status',
+    //     umurPembaca: 'umurPembaca',
+    //   ));
+    //   expect(post.statusCode == 200, true);
+    // });
   });
 }

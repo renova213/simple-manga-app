@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:mac_address/mac_address.dart';
 import 'package:manga_time/models/favorite_model/favorite_model.dart';
 
 class FavoriteApi {
   Future postFavoriteKomik({FavoriteModel? postfavorite}) async {
+    String platformVersion;
     try {
+      platformVersion = await GetMac.macAddress;
       final response = await Dio().post(
-          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json",
+          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite/$platformVersion.json",
           data: jsonEncode(postfavorite));
       return response;
     } on Exception catch (_) {
@@ -16,10 +19,12 @@ class FavoriteApi {
   }
 
   Future<List<FavoriteModel>> getFavorite() async {
+    String platformVersion;
     List<FavoriteModel> favoriteList = [];
     try {
+      platformVersion = await GetMac.macAddress;
       final response = await Dio().get(
-          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite.json");
+          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite/$platformVersion.json");
 
       (response.data as Map<String, dynamic>).forEach((key, value) {
         favoriteList.add(FavoriteModel(
