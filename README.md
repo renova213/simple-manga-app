@@ -11,6 +11,24 @@
 
 MangaTime is comic reader apps that provides comics in bahasa Indonesia, using firebase for backend.
 
+## Task
+
+This task requires the following conditions:
+
+- Minimum have 5 screens.
+- Apply MVVM Architecture.
+- Access data using a RESTful API.
+- Use transition
+- Use Form
+
+## task accomplished
+
+- [x] Minimum have 5 screens.
+- [x] Apply MVVM Architecture.
+- [x] Access data using a RESTful API.
+- [x] Use transition.
+- [x] Use Form.
+
 ## Features
 
 - [x] List of Category
@@ -24,7 +42,7 @@ MangaTime is comic reader apps that provides comics in bahasa Indonesia, using f
 <img src="assets/ss/1.png" width="30%"> <img src="assets/ss/2.png" width="30%">
 <img src="assets/ss/3.png" width="30%"> <img src="assets/ss/4.png" width="30%">
 <img src="assets/ss/5.png" width="30%"> <img src="assets/ss/6.png" width="30%">
-<img src="assets/ss/7.png" width="30%">
+<img src="assets/ss/7.png" width="30%"> <img src="assets/ss/8.png" width="30%">
 
 ## Dependencies
 
@@ -37,3 +55,4 @@ MangaTime is comic reader apps that provides comics in bahasa Indonesia, using f
 - shared_preferences: ^2.0.13
 - cached_network_image: ^3.2.0
 - photo_view: ^0.13.0
+- mac_address: ^1.0.0
