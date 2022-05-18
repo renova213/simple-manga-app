@@ -9,7 +9,7 @@ class FavoriteModel {
   String? sinopsis;
   String? status;
   String? umurPembaca;
-  String? jumlahPembaca;
+  int? jumlahPembaca;
   String? key;
 
   FavoriteModel(

@@ -3,7 +3,7 @@ import 'package:manga_time/models/komik_model/komik_api/komik_api.dart';
 import 'package:manga_time/models/komik_model/komik_list_model.dart';
 
 class HomeScreenViewModel extends ChangeNotifier {
-  final komikApi = KomikApi();
+  final komikApi = GetList();
   List<KomikListModel> _komikList = [];
   List get komikList => _komikList;
 
@@ -19,28 +19,37 @@ class HomeScreenViewModel extends ChangeNotifier {
   List<KomikListModel> _isekai = [];
   List get isekai => _isekai;
 
+  List<KomikListModel> _mangaList = [];
+  List get mangaList => _mangaList;
+
+  List<KomikListModel> _manhwaList = [];
+  List get manhwaList => _manhwaList;
+
+  List<KomikListModel> _manhuaList = [];
+  List get manhuaList => _manhuaList;
+
   getKomikList() async {
-    final getKomikList = await komikApi.getKomikList(endpoint: "komik");
+    final getKomikList = await komikApi.getKomikList();
     _komikList = getKomikList;
     _komikList.sort((b, a) => a.date!.compareTo(b.date!));
     notifyListeners();
   }
 
   getBannerList() async {
-    final getBannerList = await komikApi.getKomikList(endpoint: "banners");
+    final getBannerList = await komikApi.getBannersList();
     _bannerList = getBannerList;
     notifyListeners();
   }
 
   getPopularList() async {
-    final getPopularList = await komikApi.getKomikList(endpoint: "komik");
+    final getPopularList = await komikApi.getKomikList();
     _popularList = getPopularList;
     _popularList.sort((b, a) => a.jumlahPembaca!.compareTo(b.jumlahPembaca!));
     notifyListeners();
   }
 
   getIsekaiList() async {
-    final getIsekaiList = await komikApi.getKomikList(endpoint: "komik");
+    final getIsekaiList = await komikApi.getKomikList();
     _isekai = getIsekaiList
         .where((element) => element.genre!.toLowerCase().contains("isekai"))
         .toList();
@@ -58,6 +67,35 @@ class HomeScreenViewModel extends ChangeNotifier {
               element.genre!.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
+    notifyListeners();
+  }
+
+  getMangaList() async {
+    final getMangaList = await komikApi.getKomikList();
+    _mangaList = getMangaList
+        .where((element) => element.jenisKomik!.toLowerCase().contains("manga"))
+        .toList();
+    _mangaList.sort((b, a) => a.date!.compareTo(b.date!));
+    notifyListeners();
+  }
+
+  getManhwaList() async {
+    final getManhwaList = await komikApi.getKomikList();
+    _manhwaList = getManhwaList
+        .where(
+            (element) => element.jenisKomik!.toLowerCase().contains("manhwa"))
+        .toList();
+    _manhwaList.sort((b, a) => a.date!.compareTo(b.date!));
+    notifyListeners();
+  }
+
+  getManhuaList() async {
+    final getManhuaList = await komikApi.getKomikList();
+    _manhuaList = getManhuaList
+        .where(
+            (element) => element.jenisKomik!.toLowerCase().contains("manhua"))
+        .toList();
+    _manhuaList.sort((b, a) => a.date!.compareTo(b.date!));
     notifyListeners();
   }
 }

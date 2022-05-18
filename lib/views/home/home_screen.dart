@@ -121,19 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(NavigatorAnimation(
-                        child: DetailScreen(
-                            chapters: endpoint[index].chapters,
-                            umurPembaca: endpoint[index].umurPembaca,
-                            status: endpoint[index].status,
-                            jenisKomik: endpoint[index].jenisKomik,
-                            genre: endpoint[index].genre,
-                            caraBaca: endpoint[index].caraBaca,
-                            judul: endpoint[index].judul,
-                            gambar: endpoint[index].gambar,
-                            sinopsis: endpoint[index].sinopsis,
-                            judulIndonesia: endpoint[index].judulIndonesia,
-                            jumlahPembaca:
-                                endpoint[index].jumlahPembaca.toString())));
+                        child: DetailScreen(index: endpoint[index])));
                   },
                   child: Column(children: [
                     Expanded(

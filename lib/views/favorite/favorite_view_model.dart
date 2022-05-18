@@ -27,6 +27,7 @@ class FavoriteViewModel extends ChangeNotifier {
     await favoriteApi.deleteFavorite(
       key: key,
     );
+    tempValidatorFavorite.remove(index);
     _favoriteList.removeAt(index);
     notifyListeners();
   }

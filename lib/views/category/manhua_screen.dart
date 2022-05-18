@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_time/components/loading.dart';
 import 'package:manga_time/components/navigator_animation.dart';
-import 'package:manga_time/views/category/category_view_model.dart';
 import 'package:manga_time/views/detail/detail_screen.dart';
+import 'package:manga_time/views/home/home_screen_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ManhuaScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _ManhwaScreenState extends State<ManhuaScreen> {
   @override
   void didChangeDependencies() {
     if (isInit == true) {
-      Provider.of<CategoryViewModel>(context, listen: false).getManhuaList();
+      Provider.of<HomeScreenViewModel>(context, listen: false).getManhuaList();
       isInit = false;
     }
     super.didChangeDependencies();
@@ -27,7 +27,7 @@ class _ManhwaScreenState extends State<ManhuaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var viewModel = Provider.of<CategoryViewModel>(context);
+    var viewModel = Provider.of<HomeScreenViewModel>(context);
     if (viewModel.manhuaList.isEmpty) {
       return const Center(child: Loading());
     }
@@ -51,29 +51,7 @@ class _ManhwaScreenState extends State<ManhuaScreen> {
                                 onTap: () {
                                   Navigator.of(context).push(NavigatorAnimation(
                                       child: DetailScreen(
-                                          sinopsis: viewModel
-                                              .manhuaList[index].sinopsis,
-                                          judul:
-                                              viewModel.manhuaList[index].judul,
-                                          gambar: viewModel
-                                              .manhuaList[index].gambar,
-                                          chapters: viewModel
-                                              .manhuaList[index].chapters,
-                                          umurPembaca: viewModel
-                                              .manhuaList[index].umurPembaca,
-                                          judulIndonesia: viewModel
-                                              .manhuaList[index].judulIndonesia,
-                                          status: viewModel
-                                              .manhuaList[index].status,
-                                          genre:
-                                              viewModel.manhuaList[index].genre,
-                                          jenisKomik: viewModel
-                                              .manhuaList[index].jenisKomik,
-                                          caraBaca: viewModel
-                                              .manhuaList[index].caraBaca,
-                                          jumlahPembaca: viewModel
-                                              .manhuaList[index]
-                                              .jumlahPembaca)));
+                                          index: viewModel.manhuaList[index])));
                                 },
                                 child: CachedNetworkImage(
                                   errorWidget: (context, url, error) {

@@ -46,32 +46,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                     Navigator.of(context).push(
                                         NavigatorAnimation(
                                             child: DetailScreen(
-                                                sinopsis: widget
-                                                    .endpoint![index].sinopsis,
-                                                judul: widget
-                                                    .endpoint![index].judul,
-                                                gambar: widget
-                                                    .endpoint![index].gambar,
-                                                chapters: widget
-                                                    .endpoint![index].chapters,
-                                                umurPembaca: widget
-                                                    .endpoint![index]
-                                                    .umurPembaca,
-                                                judulIndonesia: widget
-                                                    .endpoint![index]
-                                                    .judulIndonesia,
-                                                status: widget
-                                                    .endpoint![index].status,
-                                                genre: widget
-                                                    .endpoint![index].genre,
-                                                jenisKomik: widget
-                                                    .endpoint![index]
-                                                    .jenisKomik,
-                                                caraBaca: widget
-                                                    .endpoint![index].caraBaca,
-                                                jumlahPembaca: widget
-                                                    .endpoint![index]
-                                                    .jumlahPembaca)));
+                                                index:
+                                                    widget.endpoint![index])));
                                   },
                                   child: CachedNetworkImage(
                                     errorWidget: (context, url, error) {

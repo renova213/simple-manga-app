@@ -9,31 +9,11 @@ import 'package:manga_time/views/report/report_screen.dart';
 import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
-  final List? chapters;
-  final String? jumlahPembaca;
-  final String? caraBaca;
-  final String? gambar;
-  final String? genre;
-  final String? jenisKomik;
-  final String? judul;
-  final String? judulIndonesia;
-  final String? sinopsis;
-  final String? status;
-  final String? umurPembaca;
-  const DetailScreen(
-      {Key? key,
-      this.chapters,
-      this.jumlahPembaca,
-      this.caraBaca,
-      this.gambar,
-      this.genre,
-      this.jenisKomik,
-      this.judul,
-      this.judulIndonesia,
-      this.sinopsis,
-      this.status,
-      this.umurPembaca})
-      : super(key: key);
+  final dynamic index;
+  const DetailScreen({
+    Key? key,
+    this.index,
+  }) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -54,7 +34,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                            widget.gambar.toString()),
+                            widget.index!.gambar.toString()),
                         fit: BoxFit.fill)),
               ),
               Positioned(
@@ -79,9 +59,9 @@ class _DetailScreenState extends State<DetailScreen> {
                           width: 10,
                         ),
                         Text(
-                          widget.judul!.length > 17
-                              ? '${widget.judul!.substring(0, 17)}...'
-                              : widget.judul.toString(),
+                          widget.index!.judul!.length > 17
+                              ? '${widget.index!.judul!.substring(0, 17)}...'
+                              : widget.index!.judul.toString(),
                           style: const TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -92,7 +72,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             onPressed: () {
                               Navigator.of(context).push(NavigatorAnimation(
                                   child: ReportScreen(
-                                      judul: widget.judul.toString())));
+                                      judul: widget.index!.judul.toString())));
                             },
                             icon: const Icon(
                               Icons.report,
@@ -107,11 +87,11 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                             onPressed: () {
                               var contains = favorite.favoriteList.where(
-                                  (element) =>
-                                      element.judul!.contains(widget.judul));
+                                  (element) => element.judul!
+                                      .contains(widget.index!.judul));
                               if (contains.isNotEmpty ||
-                                  favorite.tempValidatorFavorite
-                                      .contains(widget.judul.toString())) {
+                                  favorite.tempValidatorFavorite.contains(
+                                      widget.index!.judul.toString())) {
                                 Fluttertoast.showToast(
                                     toastLength: Toast.LENGTH_SHORT,
                                     backgroundColor: Colors.red,
@@ -121,18 +101,20 @@ class _DetailScreenState extends State<DetailScreen> {
                               } else {
                                 favorite.postFavorite(
                                     FavoriteModel(
-                                        caraBaca: widget.caraBaca,
-                                        gambar: widget.gambar,
-                                        genre: widget.genre,
-                                        jenisKomik: widget.jenisKomik,
-                                        judul: widget.judul,
-                                        judulIndonesia: widget.judulIndonesia,
-                                        jumlahPembaca: widget.jumlahPembaca,
-                                        sinopsis: widget.sinopsis,
-                                        status: widget.status,
-                                        umurPembaca: widget.umurPembaca,
-                                        chapters: widget.chapters),
-                                    widget.judul.toString());
+                                        caraBaca: widget.index!.caraBaca,
+                                        gambar: widget.index!.gambar,
+                                        genre: widget.index!.genre,
+                                        jenisKomik: widget.index!.jenisKomik,
+                                        judul: widget.index!.judul,
+                                        judulIndonesia:
+                                            widget.index!.judulIndonesia,
+                                        jumlahPembaca:
+                                            widget.index!.jumlahPembaca,
+                                        sinopsis: widget.index!.sinopsis,
+                                        status: widget.index!.status,
+                                        umurPembaca: widget.index!.umurPembaca,
+                                        chapters: widget.index!.chapters),
+                                    widget.index!.judul.toString());
                                 Fluttertoast.showToast(
                                     toastLength: Toast.LENGTH_SHORT,
                                     backgroundColor: Colors.red,
@@ -169,35 +151,37 @@ class _DetailScreenState extends State<DetailScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Sinopsis : ${widget.sinopsis.toString()}"),
+              Text("Sinopsis : ${widget.index!.sinopsis.toString()}"),
               const SizedBox(
                 height: 10,
               ),
-              tableCustom("Judul Indonesia", widget.judulIndonesia.toString()),
+              tableCustom(
+                  "Judul Indonesia", widget.index!.judulIndonesia.toString()),
               const SizedBox(
                 height: 5,
               ),
-              tableCustom("Jenis Komik", widget.jenisKomik.toString()),
+              tableCustom("Jenis Komik", widget.index!.jenisKomik.toString()),
               const SizedBox(
                 height: 5,
               ),
-              tableCustom("Konsep Cerita", widget.genre.toString()),
+              tableCustom("Konsep Cerita", widget.index!.genre.toString()),
               const SizedBox(
                 height: 5,
               ),
-              tableCustom("Status", widget.status.toString()),
+              tableCustom("Status", widget.index!.status.toString()),
               const SizedBox(
                 height: 5,
               ),
-              tableCustom("Umur Pembaca", widget.umurPembaca.toString()),
+              tableCustom("Umur Pembaca", widget.index!.umurPembaca.toString()),
               const SizedBox(
                 height: 5,
               ),
-              tableCustom("Jumlah Pembaca", widget.jumlahPembaca.toString()),
+              tableCustom(
+                  "Jumlah Pembaca", widget.index!.jumlahPembaca.toString()),
               const SizedBox(
                 height: 5,
               ),
-              tableCustom("Cara Baca", widget.caraBaca.toString()),
+              tableCustom("Cara Baca", widget.index!.caraBaca.toString()),
               const SizedBox(
                 height: 15,
               ),
@@ -221,7 +205,7 @@ class _DetailScreenState extends State<DetailScreen> {
               const SizedBox(
                 height: 10,
               ),
-              SizedBox(height: 250, child: listChapter(widget.chapters))
+              SizedBox(height: 250, child: listChapter(widget.index!.chapters))
             ]),
           ),
         ),

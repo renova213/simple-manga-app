@@ -51,20 +51,7 @@ class SearchManga extends SearchDelegate {
               return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(NavigatorAnimation(
-                        child: DetailScreen(
-                            sinopsis: viewModel.result[index].sinopsis,
-                            judul: viewModel.result[index].judul,
-                            gambar: viewModel.result[index].gambar,
-                            chapters: viewModel.result[index].chapters,
-                            umurPembaca: viewModel.result[index].umurPembaca,
-                            judulIndonesia:
-                                viewModel.result[index].judulIndonesia,
-                            status: viewModel.result[index].status,
-                            genre: viewModel.result[index].genre,
-                            jenisKomik: viewModel.result[index].jenisKomik,
-                            caraBaca: viewModel.result[index].caraBaca,
-                            jumlahPembaca:
-                                viewModel.result[index].jumlahPembaca)));
+                        child: DetailScreen(index: viewModel.result[index])));
                   },
                   child: SizedBox(
                       height: 150,

@@ -18,7 +18,7 @@ void main() {
                   ['gambar1'],
                   ['gambar2']
                 ],
-                jumlahPembaca: 'jumlahPembaca',
+                jumlahPembaca: 2,
                 caraBaca: 'caraBaca',
                 gambar: 'gambar',
                 genre: 'genre',

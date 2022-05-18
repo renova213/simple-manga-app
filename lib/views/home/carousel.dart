@@ -69,22 +69,8 @@ class _CarouselState extends State<Carousel> {
                               ))),
                           onPressed: () {
                             Navigator.of(context).push(NavigatorAnimation(
-                                child: DetailScreen(
-                                    sinopsis: banner.bannerList[i].sinopsis,
-                                    judul: banner.bannerList[i].judul,
-                                    gambar: banner.bannerList[i].gambar,
-                                    chapters: banner.bannerList[i].chapters,
-                                    umurPembaca:
-                                        banner.bannerList[i].umurPembaca,
-                                    judulIndonesia:
-                                        banner.bannerList[i].judulIndonesia,
-                                    status: banner.bannerList[i].status,
-                                    genre: banner.bannerList[i].genre,
-                                    jenisKomik: banner.bannerList[i].jenisKomik,
-                                    caraBaca: banner.bannerList[i].caraBaca,
-                                    jumlahPembaca: banner
-                                        .bannerList[i].jumlahPembaca
-                                        .toString())));
+                                child:
+                                    DetailScreen(index: banner.bannerList[i])));
                           },
                           child: const Text(
                             "Read Now",

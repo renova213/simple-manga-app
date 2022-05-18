@@ -3,7 +3,7 @@ import 'package:manga_time/models/komik_model/komik_api/komik_api.dart';
 import 'package:manga_time/models/komik_model/komik_list_model.dart';
 
 class CategoryViewModel extends ChangeNotifier {
-  final categoryApi = KomikApi();
+  final categoryApi = GetList();
   List<KomikListModel> _mangaList = [];
   List get mangaList => _mangaList;
 
@@ -14,7 +14,7 @@ class CategoryViewModel extends ChangeNotifier {
   List get manhuaList => _manhuaList;
 
   getMangaList() async {
-    final getMangaList = await categoryApi.getKomikList(endpoint: "komik");
+    final getMangaList = await categoryApi.getKomikList();
     _mangaList = getMangaList
         .where((element) => element.jenisKomik!.toLowerCase().contains("manga"))
         .toList();
@@ -23,7 +23,7 @@ class CategoryViewModel extends ChangeNotifier {
   }
 
   getManhwaList() async {
-    final getManhwaList = await categoryApi.getKomikList(endpoint: "komik");
+    final getManhwaList = await categoryApi.getKomikList();
     _manhwaList = getManhwaList
         .where(
             (element) => element.jenisKomik!.toLowerCase().contains("manhwa"))
@@ -33,7 +33,7 @@ class CategoryViewModel extends ChangeNotifier {
   }
 
   getManhuaList() async {
-    final getManhuaList = await categoryApi.getKomikList(endpoint: "komik");
+    final getManhuaList = await categoryApi.getKomikList();
     _manhuaList = getManhuaList
         .where(
             (element) => element.jenisKomik!.toLowerCase().contains("manhua"))

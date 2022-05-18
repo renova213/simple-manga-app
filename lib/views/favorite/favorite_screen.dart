@@ -59,35 +59,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     Navigator.of(context).push(
                                         NavigatorAnimation(
                                             child: DetailScreen(
-                                                sinopsis: favorite
-                                                    .favoriteList[index]
-                                                    .sinopsis,
-                                                judul: favorite
-                                                    .favoriteList[index].judul,
-                                                gambar: favorite
-                                                    .favoriteList[index].gambar,
-                                                chapters: favorite
-                                                    .favoriteList[index]
-                                                    .chapters,
-                                                umurPembaca: favorite
-                                                    .favoriteList[index]
-                                                    .umurPembaca,
-                                                judulIndonesia: favorite
-                                                    .favoriteList[index]
-                                                    .judulIndonesia,
-                                                status: favorite
-                                                    .favoriteList[index].status,
-                                                genre: favorite
-                                                    .favoriteList[index].genre,
-                                                jenisKomik: favorite
-                                                    .favoriteList[index]
-                                                    .jenisKomik,
-                                                caraBaca: favorite
-                                                    .favoriteList[index]
-                                                    .caraBaca,
-                                                jumlahPembaca: favorite
-                                                    .favoriteList[index]
-                                                    .jumlahPembaca)));
+                                                index: favorite
+                                                    .favoriteList[index])));
                                   },
                                   child: CachedNetworkImage(
                                     errorWidget: (context, url, error) {

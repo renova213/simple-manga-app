@@ -37,12 +37,29 @@ This task requires the following conditions:
 - [x] Search Comic by name and Genres
 - [x] Report Form
 
-## Screenshots
+## List Screen
 
-<img src="assets/ss/1.png" width="30%"> <img src="assets/ss/2.png" width="30%">
-<img src="assets/ss/3.png" width="30%"> <img src="assets/ss/4.png" width="30%">
-<img src="assets/ss/5.png" width="30%"> <img src="assets/ss/6.png" width="30%">
-<img src="assets/ss/7.png" width="30%"> <img src="assets/ss/8.png" width="30%">
+- Splash Screen
+  <img src="assets/ss/9.png" width="30%">
+
+- Home Screen
+  <img src="assets/ss/5.png" width="30%">
+
+- Detail Screen
+  <img src="assets/ss/3.png" width="30%">
+
+- Chapter Screen
+  <img src="assets/ss/1.png" width="30%"> <img src="assets/ss/2.png" width="30%">
+
+- Favorite Screen
+  <img src="assets/ss/4.png" width="30%">
+
+- Search Screen
+  <img src="assets/ss/6.png" width="30%"> <img src="assets/ss/7.png" width="30%">
+
+- Report Screen
+
+<img src="assets/ss/8.png" width="30%">
 
 ## Dependencies
 

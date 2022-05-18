@@ -49,9 +49,11 @@ class FavoriteApi {
   }
 
   Future deleteFavorite({key}) async {
+    String platformVersion;
     try {
+      platformVersion = await GetMac.macAddress;
       await Dio().delete(
-          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite/$key.json");
+          "https://emailpasswordauth-1dc31-default-rtdb.firebaseio.com/favorite/$platformVersion/$key.json");
     } catch (_) {
       throw Exception("Delete Failed");
     }
